@@ -34,7 +34,7 @@ public class Invocador {
         this.id = id;
     }
 
-    public String getContaId() {
+    public String getIdConta() {
         return accountId;
     }
 

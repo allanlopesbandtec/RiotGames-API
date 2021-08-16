@@ -1,4 +1,4 @@
-package com.riotgames.Riot.Games.API.domain;
+package com.riotgames.Riot.Games.API.domain.Dto;
 
 public class CampeaoPorMaestria {
 

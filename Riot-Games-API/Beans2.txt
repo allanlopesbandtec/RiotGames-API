@@ -1,0 +1,8 @@
+@Bean
+
+Normalmente vamos usar classes classes de configuração com o 
+@Configuration
+
+e os métodos ultilizando essas classes externas vamos usar 
+o @Bean normalmente em classes e métodos 
+que importamos classes que não foram criadas por nós.

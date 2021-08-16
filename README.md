@@ -1,13 +1,19 @@
 
  
-# --- Consumindo API Riot Games - LoL --- 
+# Consumindo API Riot Games - LoL 
 
->Descrição: Similar ao histórico que precisamos para jogar o Clash, usando o API Riot Games
+> Consumo e tratamento de API externo: 
+
+>http://ddragon.leagueoflegends.com/cdn/11.9.1/data/pt_BR/champion.json
+
+>https://developer.riotgames.com/apis
 
 Funcionalidades:
 
-- Busca do invocador desejado
+- Busca de perfil do jogador
 
 - Retorno do raking maestrias filtrado pelo invocador desejado
 
 - Histórico de partidas filtrado pelo invocador desejado
+
+
