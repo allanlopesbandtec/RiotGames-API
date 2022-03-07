@@ -21,10 +21,20 @@ public class ChampionWS {
     @Autowired
     private RiotgamesClient riotgamesClient;
 
-    public List<Champion> todosCampeoes() throws ApiError {
+    public List<Champion> allChampions() throws ApiError {
+        String request = "";
 
-        String todos = riotgamesClient.buscarCampeoes();
-        JSONObject campeoes = new JSONObject(todos);
+        try {
+             request = riotgamesClient.findChampions();
+        } catch (ApiError ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new ApiError(ChampionWS.class, ex.getLocalizedMessage());
+        }
+
+
+
+        JSONObject campeoes = new JSONObject(request);
         JSONObject chave = campeoes.getJSONObject("data");
 
         List<Champion> listaDeCampeoes = new ArrayList<>();
@@ -109,7 +119,7 @@ public class ChampionWS {
     }
 
     public List<ChampionDto> getCampeaoDtos() throws ApiError {
-        return todosCampeoes().stream().map(ChampionDto::new).collect(Collectors.toList());
+        return allChampions().stream().map(ChampionDto::new).collect(Collectors.toList());
     }
 
 }

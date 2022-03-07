@@ -1,13 +1,16 @@
 package com.riotgames.api.client;
 
 import com.google.gson.Gson;
+import com.riotgames.api.model.ApiError;
 import com.riotgames.api.model.enumerator.RequestApiEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+@Service
 public class RESTClient {
 
     @Autowired
@@ -16,9 +19,7 @@ public class RESTClient {
     @Autowired
     private Gson gson;
 
-    public <T> T sendReceive(String uri, RequestApiEnum requestApiEnum) throws Exception {
-        Object result = null;
-        String auxEndpoint = null;
+    public ResponseEntity<String> sendReceive(String uri, RequestApiEnum requestApiEnum, Class retorno) throws Exception, ApiError {
         ResponseEntity<String> responseEntity;
         HttpEntity<String> entity = new HttpEntity<>(getHeaders());
 
@@ -29,22 +30,30 @@ public class RESTClient {
             ResponseEntity<Object> responseException;
 
             if (ex instanceof HttpStatusCodeException){
-
-                Object responseError = gson.fromJson(((HttpStatusCodeException) ex).getResponseBodyAsString(), ex.getClass());
-
-                responseException = new ResponseEntity<Object>(responseError, ((HttpStatusCodeException) ex).getStatusCode());
+                HttpStatusCodeException exAux = (HttpStatusCodeException) ex;
+//                Object responseError = gson.fromJson(((HttpStatusCodeException) ex).getResponseBodyAsString(), ex.getClass());
+                responseException = new ResponseEntity<>(exAux.getResponseBodyAsString(), exAux.getStatusCode());
             } else {
-                responseException =  new ResponseEntity<Object>(ex.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                responseException =  new ResponseEntity<>(ex.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
-            throw new Exception((String) responseException.getBody());
+            throw new ApiError(RESTClient.class,  "Erro no envio da requisição para RiotGames", responseException.getStatusCode(), responseException.getBody().toString());
         }
 
-        return (T) result;
+        return responseEntity;
     }
 
-    public HttpHeaders getHeaders() {
-        return null;
+    public HttpHeaders getHeaders() throws ApiError {
+        HttpHeaders headers = new HttpHeaders();
+
+        try {
+//            headers.add("X-Riot-Token=", "RGAPI-aaa09c53-b2a4-47c1-879a-8caea1a6ef9d");
+        headers.setBearerAuth("X-Riot-Token=RGAPI-aaa09c53-b2a4-47c1-879a-8caea1a6ef9d");
+        } catch (Exception ex) {
+            throw new ApiError(RESTClient.class, "Erro ao montar requisição", ex.getLocalizedMessage());
+        }
+
+        return headers;
     }
 
 }

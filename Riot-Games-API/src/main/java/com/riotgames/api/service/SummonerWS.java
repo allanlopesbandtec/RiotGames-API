@@ -1,35 +1,26 @@
-//package com.riotgames.api.service;
-//
-//import com.riotgames.api.model.ApiError;
-//import com.riotgames.api.model.Dto.ChampionByMastery;
-//import com.riotgames.api.model.Dto.ChampionDto;
-//import com.riotgames.api.model.Dto.ChampionMasteryDto;
-//import com.riotgames.api.model.Summoner;
-//import org.json.JSONObject;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//
-//@Service
-//public class SummonerService {
-//
+package com.riotgames.api.service;
+
+import com.riotgames.api.client.RiotgamesClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class SummonerWS {
+
 //    @Autowired
 //    private RiotGamesApi riotGamesApi;
-//
-//    @Autowired
-//    private RiotGamesAmericas riotGamesAmericas;
-//
-//    @Autowired
-//    private ChampionWS championWS;
-//
+
+    @Autowired
+    private RiotgamesClient riotgamesClient;
+
+    @Autowired
+    private ChampionWS championWS;
+
 //    public Summoner buscaInvocador(String nick) {
-//        return riotGamesApi.getInvocador(nick);
+//        return riotgamesClient.findSummonerByNick(nick);
 //    }
-//
-//
+
+
 //    public List<ChampionMasteryDto> campeaoPorMaestrias(String nick) throws ApiError {
 //        //Buscando invocador
 //        Summoner summoner = buscaInvocador(nick);
@@ -54,9 +45,7 @@
 //    }
 //
 //    public List<String> buscarIdPartidas(String nick, Integer apartirDe, Integer quantidade){
-//
 //        Summoner summoner = buscaInvocador(nick);
-//
 //        return riotGamesAmericas.buscarIdPartidas(summoner.getPuuId(), apartirDe, quantidade);
 //    }
 //
@@ -70,9 +59,6 @@
 //         JSONObject campeoes = new JSONObject(todos);
 //         JSONObject chave = campeoes.getJSONObject("metadata");
 //
-//        System.out.println(chave);
-//
-//
 //         return "teste";
 //    }
-//}
+}
