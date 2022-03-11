@@ -19,7 +19,7 @@ public class RESTClient {
     @Autowired
     private Gson gson;
 
-    public ResponseEntity<String> sendReceive(String uri, RequestApiEnum requestApiEnum, Class retorno) throws Exception, ApiError {
+    public ResponseEntity<String> sendReceive(String uri, RequestApiEnum requestApiEnum, Class retorno) throws ApiError {
         ResponseEntity<String> responseEntity;
         HttpEntity<String> entity = new HttpEntity<>(getHeaders());
 
@@ -47,8 +47,8 @@ public class RESTClient {
         HttpHeaders headers = new HttpHeaders();
 
         try {
-//            headers.add("X-Riot-Token=", "RGAPI-aaa09c53-b2a4-47c1-879a-8caea1a6ef9d");
-        headers.setBearerAuth("X-Riot-Token=RGAPI-aaa09c53-b2a4-47c1-879a-8caea1a6ef9d");
+            headers.add("X-Riot-Token", "RGAPI-eb5c0f3a-e01e-424f-81a5-3e9dffc56dc8");
+//        headers.setBearerAuth("X-Riot-Token=RGAPI-eb5c0f3a-e01e-424f-81a5-3e9dffc56dc8");
         } catch (Exception ex) {
             throw new ApiError(RESTClient.class, "Erro ao montar requisição", ex.getLocalizedMessage());
         }
