@@ -1,45 +1,67 @@
 package com.riotgames.api.model.champion;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Stats {
 
+    @JsonProperty
     private Integer hp;
 
+    @JsonProperty
     private Integer hpperlevel;
 
+    @JsonProperty
     private Integer mp;
 
+    @JsonProperty
     private Integer mpperlevel;
 
+    @JsonProperty
     private Integer movespeed;
 
+    @JsonProperty
     private Integer armor;
 
+    @JsonProperty
     private Double armorperlevel;
 
+    @JsonProperty
     private Integer spellblock;
 
+    @JsonProperty
     private Double spellblockperlevel;
 
+    @JsonProperty
     private Integer attackrange;
 
+    @JsonProperty
     private Integer hpregen;
 
+    @JsonProperty
     private Integer hpregenperlevel;
 
+    @JsonProperty
     private Integer mpregen;
 
+    @JsonProperty
     private Integer mpregenperlevel;
 
+    @JsonProperty
     private Integer crit;
 
+    @JsonProperty
     private Integer critperlevel;
 
+    @JsonProperty
     private Integer attackdamage;
 
+    @JsonProperty
     private Integer attackdamageperlevel;
 
+    @JsonProperty
     private Double attackspeedperlevel;
 
+    @JsonProperty
     private Double attackspeed;
 
     public Stats(Integer hp, Integer hpperlevel, Integer mp, Integer mpperlevel, Integer movespeed, Integer armor, Double armorperlevel, Integer spellblock, Double spellblockperlevel, Integer attackrange, Integer hpregen, Integer hpregenperlevel, Integer mpregen, Integer mpregenperlevel, Integer crit, Integer critperlevel, Integer attackdamage, Integer attackdamageperlevel, Double attackspeedperlevel, Double attackspeed) {

@@ -1,5 +1,6 @@
 package com.riotgames.api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.riotgames.api.model.champion.Image;
 import com.riotgames.api.model.champion.Info;
 import com.riotgames.api.model.champion.Stats;
@@ -9,26 +10,37 @@ import java.util.List;
 
 public class Champion {
 
+    @JsonProperty
     private String version;
 
+    @JsonProperty
     private String id;
 
+    @JsonProperty
     private String key;
 
+    @JsonProperty
     private String name;
 
+    @JsonProperty
     private String title;
 
+    @JsonProperty
     private String blurb;
 
+    @JsonProperty
     private Info info;
 
+    @JsonProperty
     private Image image;
 
+    @JsonProperty
     private List<String> tags;
 
+    @JsonProperty
     private String partType;
 
+    @JsonProperty
     private Stats stats;
 
     public Champion(String version, String id, String key, String name, String title, String blurb, Info info, Image image, List<String> tags, String partType, Stats stats) {

@@ -1,8 +1,9 @@
 package com.riotgames.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.http.HttpStatus;
 
-public class ApiError extends Throwable {
+public class ApiError extends Exception {
 
     private Class clazz;
 
@@ -13,7 +14,6 @@ public class ApiError extends Throwable {
     private String bodyErrorRequest;
 
     public ApiError(Class clazz, String description, HttpStatus httpStatus, String bodyErrorRequest) {
-        super(description);
         this.clazz = clazz;
         this.description = description;
         this.httpStatus = httpStatus;
@@ -29,6 +29,40 @@ public class ApiError extends Throwable {
         this.clazz = clazz;
         this.description = description;
         this.bodyErrorRequest = bodyErrorRequest;
+    }
+
+    //Retira throwable
+    @JsonIgnore
+    @Override
+    public synchronized Throwable getCause() {
+        return super.getCause();
+    }
+
+    //Retira StackTraceElement[]
+    @JsonIgnore
+    @Override
+    public StackTraceElement[] getStackTrace() {
+        return super.getStackTrace();
+    }
+
+    //Retira Message
+    @JsonIgnore
+    @Override
+    public String getMessage() {
+        return super.getMessage();
+    }
+
+    //Retira localizedMessage
+    @JsonIgnore
+    @Override
+    public String getLocalizedMessage() {
+        return super.getLocalizedMessage();
+    }
+
+    @JsonIgnore
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return super.fillInStackTrace();
     }
 
     public Class getClazz() {

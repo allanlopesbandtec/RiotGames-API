@@ -33,8 +33,10 @@ public class ChampionWS {
         }
 
 
-
         JSONObject campeoes = new JSONObject(request);
+
+
+
         JSONObject chave = campeoes.getJSONObject("data");
 
         List<Champion> listaDeCampeoes = new ArrayList<>();

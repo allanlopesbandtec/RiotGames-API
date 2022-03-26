@@ -44,11 +44,11 @@ public class RESTClient {
     }
 
     public HttpHeaders getHeaders() throws ApiError {
+
         HttpHeaders headers = new HttpHeaders();
 
         try {
-            headers.add("X-Riot-Token", "RGAPI-eb5c0f3a-e01e-424f-81a5-3e9dffc56dc8");
-//        headers.setBearerAuth("X-Riot-Token=RGAPI-eb5c0f3a-e01e-424f-81a5-3e9dffc56dc8");
+            headers.add("X-Riot-Token", "RGAPI-acfd08b9-b2ba-415c-b455-86072e44a8a6");
         } catch (Exception ex) {
             throw new ApiError(RESTClient.class, "Erro ao montar requisição", ex.getLocalizedMessage());
         }

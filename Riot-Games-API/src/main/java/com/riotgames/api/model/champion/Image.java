@@ -1,19 +1,29 @@
 package com.riotgames.api.model.champion;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
 public class Image {
 
+    @JsonProperty
     private String full;
 
+    @JsonProperty
     private String sprite;
 
+    @JsonProperty
     private String group;
 
+    @JsonProperty
     private Integer x;
 
+    @JsonProperty
     private Integer y;
 
+    @JsonProperty
     private Integer w;
 
+    @JsonProperty
     private Integer h;
 
     public Image(String full, String sprite, String group, Integer x, Integer y, Integer w, Integer h) {

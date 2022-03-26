@@ -1,13 +1,19 @@
 package com.riotgames.api.model.champion;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Info {
 
+    @JsonProperty
     private Integer attack;
 
+    @JsonProperty
     private Integer defense;
 
+    @JsonProperty
     private Integer magic;
 
+    @JsonProperty
     private Integer difficulty;
 
     public Info(Integer attack, Integer defense, Integer magic, Integer difficulty) {

@@ -18,7 +18,7 @@ public class RiotgamesClient {
         ResponseEntity<String> result;
 
         try {
-            result = restClient.sendReceive("/cdn/12.5.1/data/pt_BR/champion.json", RequestApiEnum.CHAMPION, ResponseEntity.class);
+            result = restClient.sendReceive("/csadsadasdn/12.5.1/data/pt_BR/champion.json", RequestApiEnum.CHAMPION, ResponseEntity.class);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
