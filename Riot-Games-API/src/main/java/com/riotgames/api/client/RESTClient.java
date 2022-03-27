@@ -30,14 +30,20 @@ public class RESTClient {
             ResponseEntity<Object> responseException;
 
             if (ex instanceof HttpStatusCodeException){
-                HttpStatusCodeException exAux = (HttpStatusCodeException) ex;
+                HttpStatusCodeException httpStatusError = (HttpStatusCodeException) ex;
 //                Object responseError = gson.fromJson(((HttpStatusCodeException) ex).getResponseBodyAsString(), ex.getClass());
-                responseException = new ResponseEntity<>(exAux.getResponseBodyAsString(), exAux.getStatusCode());
+                responseException = new ResponseEntity<>(httpStatusError.getResponseBodyAsString(), httpStatusError.getStatusCode());
             } else {
                 responseException =  new ResponseEntity<>(ex.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
-            throw new ApiError(RESTClient.class,  "Erro no envio da requisição para RiotGames", responseException.getStatusCode(), responseException.getBody().toString());
+            throw new ApiError(
+                    RESTClient.class,
+                    "sendReceive",
+                    "Error to send request to the RiotGames API",
+                    responseException.getBody().toString(),
+                    responseException.getStatusCode()
+            );
         }
 
         return responseEntity;
@@ -48,9 +54,13 @@ public class RESTClient {
         HttpHeaders headers = new HttpHeaders();
 
         try {
-            headers.add("X-Riot-Token", "RGAPI-acfd08b9-b2ba-415c-b455-86072e44a8a6");
+            headers.add("X-Riot-Token", "RGAPI-939528cf-fd89-4080-8db8-353602b452c6");
         } catch (Exception ex) {
-            throw new ApiError(RESTClient.class, "Erro ao montar requisição", ex.getLocalizedMessage());
+            throw new ApiError(
+                    RESTClient.class,
+                    "getHeaders",
+                    "Error to create new Headers",
+                    ex.getLocalizedMessage());
         }
 
         return headers;

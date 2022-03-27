@@ -12,17 +12,17 @@ public class RiotgamesClient {
     @Autowired
     private RESTClient restClient;
 
-
     public String findChampions() throws ApiError {
-
         ResponseEntity<String> result;
 
         try {
-            result = restClient.sendReceive("/csadsadasdn/12.5.1/data/pt_BR/champion.json", RequestApiEnum.CHAMPION, ResponseEntity.class);
+            //Patch -> enumeração 12.5.1
+            //Linguagem de retorno pt_BR
+            result = restClient.sendReceive("/cdn/12.5.1/data/pt_BR/champion.json", RequestApiEnum.CHAMPION, ResponseEntity.class);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new ApiError(RiotgamesClient.class, "Falha ao efetuar request", ex.getLocalizedMessage());
+            throw new ApiError(RiotgamesClient.class, "findChampions", "Falha ao efetuar request", ex.getLocalizedMessage());
         }
 
         return result.getBody();
@@ -38,7 +38,7 @@ public class RiotgamesClient {
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new ApiError(RiotgamesClient.class, "Falha ao efetuar request", ex.getLocalizedMessage());
+            throw new ApiError(RiotgamesClient.class, "", "Falha ao efetuar request", ex.getLocalizedMessage());
         }
 
         return result.getBody();

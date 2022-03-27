@@ -16,15 +16,12 @@ public class ChampionController {
 
     @GetMapping("/champions")
     public ResponseEntity<Object> allChampions() {
-
-        ResponseEntity response;
+        ResponseEntity<Object> response = null;
 
         try {
-            response = new ResponseEntity<>(championWS.allChampions(), HttpStatus.OK);
+            response = new ResponseEntity<>(championWS.allChampionsList(), HttpStatus.OK);
         } catch (ApiError ex) {
             response = new ResponseEntity<>(ex, ex.getHttpStatus());
-        } catch (Exception ex) {
-            response = new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return response;

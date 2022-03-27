@@ -3,32 +3,56 @@ package com.riotgames.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.http.HttpStatus;
 
+//Classe de erros do projeto
 public class ApiError extends Exception {
 
+    //Classe de origem do erro
     private Class clazz;
 
+    //Método de origem do erro
+    private String method;
+
+    //Descrição do erro
     private String description;
 
+    //Status da resposta
+    //Seja da Api consumida
+    //Seja de validações ou erros criados nas services
     private HttpStatus httpStatus;
 
+    //Corpo do erro, seja criado dentro da API ou de uma Exception qualquer
     private String bodyErrorRequest;
 
-    public ApiError(Class clazz, String description, HttpStatus httpStatus, String bodyErrorRequest) {
+    //Construtor para erros em request, usado no sendReceive
+    public ApiError(Class clazz, String method, String description, String bodyErrorRequest, HttpStatus httpStatus) {
         this.clazz = clazz;
+        this.method = method;
+        this.description = description;
+        this.bodyErrorRequest = bodyErrorRequest;
+        this.httpStatus = httpStatus;
+    }
+
+
+    //Validações, não necessáriamente vai resultar em erro
+    public ApiError(Class clazz, String method, String description, HttpStatus httpStatus) {
+        this.clazz = clazz;
+        this.method = method;
         this.description = description;
         this.httpStatus = httpStatus;
-        this.bodyErrorRequest = bodyErrorRequest;
     }
 
-    public ApiError(Class clazz, String description) {
+    //Construtor para erros genéricos nas classes
+    public ApiError(Class clazz, String method, String description, String bodyErrorRequest) {
         this.clazz = clazz;
-        this.description = description;
-    }
-
-    public ApiError(Class clazz, String description, String bodyErrorRequest) {
-        this.clazz = clazz;
+        this.method = method;
         this.description = description;
         this.bodyErrorRequest = bodyErrorRequest;
+        this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+
+
+
+    public ApiError() {
     }
 
     //Retira throwable
@@ -87,6 +111,14 @@ public class ApiError extends Exception {
 
     public void setHttpStatus(HttpStatus httpStatus) {
         this.httpStatus = httpStatus;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public String getBodyErrorRequest() {
