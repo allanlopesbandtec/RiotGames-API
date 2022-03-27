@@ -1,15 +1,20 @@
 package com.riotgames.api.model;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.riotgames.api.model.champion.Image;
 import com.riotgames.api.model.champion.Info;
 import com.riotgames.api.model.champion.Stats;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Champion {
 
+    //A notação JsonProperty faz exatemente o que diz!
+    //Ela quem vai mapear cada chave no Json para o atributo com mesmo nome!
     @JsonProperty
     private String version;
 
@@ -38,12 +43,36 @@ public class Champion {
     private List<String> tags;
 
     @JsonProperty
-    private String partType;
+    private String partype;
 
     @JsonProperty
     private Stats stats;
 
-    public Champion(String version, String id, String key, String name, String title, String blurb, Info info, Image image, List<String> tags, String partType, Stats stats) {
+    //Map que vai servir para construir cada instancia de campeão
+    //E mapear com sua própria chave
+    public Map<String, Champion> championMap = new HashMap<>();
+
+    //Essa notação @JsonAnySetter permite que utilize o map baseado
+    //Nos getters e setters da sua classe
+    @JsonAnySetter
+    void setChampion(String key, Champion champion) {
+        //método put "cadastra" um objeto com sua chave
+        championMap.put(key,champion);
+    }
+
+    //Getter do Map
+    public Map<String, Champion> getchampionMap() {
+        return championMap;
+    }
+
+    //Setter
+//    public Champion setChampion(Map<String, Champion> championMap) {
+//        this.championMap = championMap;
+//        return this;
+//    }
+
+
+    public Champion(String version, String id, String key, String name, String title, String blurb, Info info, Image image, List<String> tags, String partype, Stats stats) {
         this.version = version;
         this.id = id;
         this.key = key;
@@ -53,7 +82,7 @@ public class Champion {
         this.info = info;
         this.image = image;
         this.tags = tags;
-        this.partType = partType;
+        this.partype = partype;
         this.stats = stats;
     }
 
@@ -129,12 +158,12 @@ public class Champion {
         this.tags = tags;
     }
 
-    public String getPartType() {
-        return partType;
+    public String getPartype() {
+        return partype;
     }
 
-    public void setPartType(String partType) {
-        this.partType = partType;
+    public void setPartype(String partype) {
+        this.partype = partype;
     }
 
     public Stats getStats() {
