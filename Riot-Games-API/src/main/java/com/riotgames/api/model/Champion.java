@@ -65,7 +65,7 @@ public class Champion {
         return championMap;
     }
 
-    //Setter
+    //Setter - não usei
 //    public Champion setChampion(Map<String, Champion> championMap) {
 //        this.championMap = championMap;
 //        return this;
