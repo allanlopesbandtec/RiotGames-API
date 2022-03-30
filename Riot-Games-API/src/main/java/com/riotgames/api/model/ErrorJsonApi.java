@@ -3,7 +3,7 @@ package com.riotgames.api.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class ErroJsonApi {
+public class ErrorJsonApi {
 
     @JsonProperty(namespace = "status")
     private Status status;

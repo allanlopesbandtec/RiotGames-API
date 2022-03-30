@@ -54,7 +54,7 @@ public class RESTClient {
                     RESTClient.class,
                     "sendReceive",
                     "Error to send request to the RiotGames API",
-                    UtilsWS.montaErroJsonApi(responseException.getBody().toString()) ,
+                    UtilsWS.returnErrors(responseException.getBody().toString(), requestApiEnum) ,
                     responseException.getStatusCode()
             );
         }

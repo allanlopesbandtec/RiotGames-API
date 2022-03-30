@@ -1,7 +1,6 @@
 package com.riotgames.api.client;
 
 import com.riotgames.api.model.ApiError;
-import com.riotgames.api.model.Summoner;
 import com.riotgames.api.model.enumerator.RequestApiEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,7 @@ public class RiotgamesClient {
         try {
             //Patch -> enumeração 12.5.1
             //Linguagem de retorno pt_BR
-            result = restClient.sendReceive("/cdn/12.5.1/data/pt_BR/champion.json", RequestApiEnum.CHAMPION, ResponseEntity.class);
+            result = restClient.sendReceive("/cdn/aaa12.5.1/data/pt_BR/champion.json", RequestApiEnum.CHAMPION, ResponseEntity.class);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
