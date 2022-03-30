@@ -1,6 +1,7 @@
 package com.riotgames.api.client;
 
 import com.google.gson.Gson;
+import com.riotgames.api.utils.UtilsWS;
 import com.riotgames.api.model.ApiError;
 import com.riotgames.api.model.enumerator.RequestApiEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class RESTClient {
                     RESTClient.class,
                     "sendReceive",
                     "Error to send request to the RiotGames API",
-                    responseException.getBody().toString(),
+                    UtilsWS.montaErroJsonApi(responseException.getBody().toString()) ,
                     responseException.getStatusCode()
             );
         }
@@ -66,7 +67,7 @@ public class RESTClient {
         HttpHeaders headers = new HttpHeaders();
 
         try {
-            headers.add("X-Riot-Token", "RGAPI-939528cf-fd89-4080-8db8-353602b452c6");
+            headers.add("X-Riot-Token", "RGAPI-536a7bf3-876f-48a5-81b2-5769dcf3ff5e");
         } catch (Exception ex) {
             throw new ApiError(
                     RESTClient.class,

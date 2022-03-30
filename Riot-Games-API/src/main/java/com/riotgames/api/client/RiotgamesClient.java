@@ -1,6 +1,7 @@
 package com.riotgames.api.client;
 
 import com.riotgames.api.model.ApiError;
+import com.riotgames.api.model.Summoner;
 import com.riotgames.api.model.enumerator.RequestApiEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +29,9 @@ public class RiotgamesClient {
         return result.getBody();
     }
 
-    public String findSummonerByNick(String nickName) throws ApiError {
-
+    public ResponseEntity<String> findSummonerByNick(String nickName) throws ApiError {
         ResponseEntity<String> result;
+
         String uri = "/lol/summoner/v4/summoners/by-name/" + nickName;
 
         try {
@@ -41,7 +42,7 @@ public class RiotgamesClient {
             throw new ApiError(RiotgamesClient.class, "", "Falha ao efetuar request", ex.getLocalizedMessage());
         }
 
-        return result.getBody();
+        return result;
     }
 
 }

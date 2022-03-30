@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.riotgames.api.client.RiotgamesClient;
 import com.riotgames.api.model.ApiError;
 import com.riotgames.api.model.Summoner;
+import com.riotgames.api.service.SummonerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,25 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SummonerController {
 
-
-//    @Autowired
-//    RiotGamesApi riotGamesApi;
-//
-//    @Autowired
-//    private SummonerService summonerService;
-
     @Autowired
-    private RiotgamesClient riotgamesClient;
-
-    @Autowired
-    private Gson gson;
+    private SummonerService summonerService;
 
     @GetMapping("/summoner/{nick}")
-    public ResponseEntity buscarInvocador(@PathVariable String nick) throws ApiError {
-        Summoner summoner = gson.fromJson(riotgamesClient.findSummonerByNick(nick), Summoner.class);
-        return ResponseEntity.ok(summoner);
-    }
+    public ResponseEntity<Object> buscarInvocador(@PathVariable String nick) throws ApiError {
+        ResponseEntity<Object> response;
 
+        try {
+            response = new ResponseEntity<>(summonerService.findSummoner(nick), HttpStatus.OK);
+        } catch (ApiError ex) {
+            response = new ResponseEntity<>(ex, ex.getHttpStatus());
+        }
+
+        return response;
+    }
 //
 //    @GetMapping("/maestria/{nick}")
 //    public ResponseEntity buscarMaestriaPorInvocador(@PathVariable String nick) {
@@ -41,7 +39,7 @@ public class SummonerController {
 //
 //        //return ResponseEntity.ok(invocadorService.campeaoPorMaestrias(nick));
 //    }
-//
+
 
 //
 //    @GetMapping("/partidas/id/{nick}")

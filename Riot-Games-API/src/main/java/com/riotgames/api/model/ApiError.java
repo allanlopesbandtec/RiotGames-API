@@ -21,14 +21,14 @@ public class ApiError extends Exception {
     private HttpStatus httpStatus;
 
     //Corpo do erro, seja criado dentro da API ou de uma Exception qualquer
-    private String bodyErrorRequest;
+    private Object apiError;
 
     //Construtor para erros em request, usado no sendReceive
-    public ApiError(Class clazz, String method, String description, String bodyErrorRequest, HttpStatus httpStatus) {
+    public ApiError(Class clazz, String method, String description, Object apiError, HttpStatus httpStatus) {
         this.clazz = clazz;
         this.method = method;
         this.description = description;
-        this.bodyErrorRequest = bodyErrorRequest;
+        this.apiError = apiError;
         this.httpStatus = httpStatus;
     }
 
@@ -42,11 +42,11 @@ public class ApiError extends Exception {
     }
 
     //Construtor para erros genéricos nas classes
-    public ApiError(Class clazz, String method, String description, String bodyErrorRequest) {
+    public ApiError(Class clazz, String method, String description, Object bodyErrorRequest) {
         this.clazz = clazz;
         this.method = method;
         this.description = description;
-        this.bodyErrorRequest = bodyErrorRequest;
+        this.apiError = bodyErrorRequest;
         this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
@@ -121,11 +121,11 @@ public class ApiError extends Exception {
         this.method = method;
     }
 
-    public String getBodyErrorRequest() {
-        return bodyErrorRequest;
+    public Object getApiError() {
+        return apiError;
     }
 
-    public void setBodyErrorRequest(String bodyErrorRequest) {
-        this.bodyErrorRequest = bodyErrorRequest;
+    public void setApiError(String apiError) {
+        this.apiError = apiError;
     }
 }

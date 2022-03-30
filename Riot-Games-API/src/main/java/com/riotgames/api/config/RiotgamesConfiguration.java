@@ -15,4 +15,6 @@ public class RiotgamesConfiguration {
         factory.setReadTimeout(240000);
         return new RestTemplate(factory);
     }
+
+
 }
