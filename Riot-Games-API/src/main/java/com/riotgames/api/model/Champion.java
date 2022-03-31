@@ -13,64 +13,33 @@ import java.util.Map;
 
 public class Champion {
 
+    //Map que vai servir para construir cada instancia de campeão
+    //E mapear com sua própria chave
+    public Map<String, Champion> championMap = new HashMap<>();
     //A notação JsonProperty faz exatemente o que diz!
     //Ela quem vai mapear cada chave no Json para o atributo com mesmo nome!
     @JsonProperty
     private String version;
-
     @JsonProperty
     private String id;
-
     @JsonProperty
     private String key;
-
     @JsonProperty
     private String name;
-
     @JsonProperty
     private String title;
-
     @JsonProperty
     private String blurb;
-
     @JsonProperty
     private Info info;
-
     @JsonProperty
     private Image image;
-
     @JsonProperty
     private List<String> tags;
-
     @JsonProperty
     private String partype;
-
     @JsonProperty
     private Stats stats;
-
-    //Map que vai servir para construir cada instancia de campeão
-    //E mapear com sua própria chave
-    public Map<String, Champion> championMap = new HashMap<>();
-
-    //Essa notação @JsonAnySetter permite que utilize o map baseado
-    //Nos getters e setters da sua classe
-    @JsonAnySetter
-    void setChampion(String key, Champion champion) {
-        //método put "cadastra" um objeto com sua chave
-        championMap.put(key,champion);
-    }
-
-    //Getter do Map
-    public Map<String, Champion> getchampionMap() {
-        return championMap;
-    }
-
-    //Setter - não usei
-//    public Champion setChampion(Map<String, Champion> championMap) {
-//        this.championMap = championMap;
-//        return this;
-//    }
-
 
     public Champion(String version, String id, String key, String name, String title, String blurb, Info info, Image image, List<String> tags, String partype, Stats stats) {
         this.version = version;
@@ -84,6 +53,25 @@ public class Champion {
         this.tags = tags;
         this.partype = partype;
         this.stats = stats;
+    }
+
+    //Essa notação @JsonAnySetter permite que utilize o map baseado
+    //Nos getters e setters da sua classe
+    @JsonAnySetter
+    void setChampion(String key, Champion champion) {
+        //método put "cadastra" um objeto com sua chave
+        championMap.put(key, champion);
+    }
+
+    //Setter - não usei
+//    public Champion setChampion(Map<String, Champion> championMap) {
+//        this.championMap = championMap;
+//        return this;
+//    }
+
+    //Getter do Map
+    public Map<String, Champion> getchampionMap() {
+        return championMap;
     }
 
     public String getVersion() {

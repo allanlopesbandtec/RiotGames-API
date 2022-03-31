@@ -2,23 +2,23 @@ package com.riotgames.api.model.Dto;
 
 public class ChampionByMastery {
 
-    private Long championPointsUntilNextLevel;
+    private final Long championPointsUntilNextLevel;
 
-    private Boolean chestGranted;
+    private final Boolean chestGranted;
 
-    private Long championId;
+    private final Long championId;
 
-    private Long lastPlayTime;
+    private final Long lastPlayTime;
 
-    private Integer championLevel;
+    private final Integer championLevel;
 
-    private String summonerId;
+    private final String summonerId;
 
-    private Integer championPoints;
+    private final Integer championPoints;
 
-    private Long championPointsSinceLastLevel;
+    private final Long championPointsSinceLastLevel;
 
-    private Integer tokensEarned;
+    private final Integer tokensEarned;
 
     public ChampionByMastery(Long championPointsUntilNextLevel, Boolean chestGranted, Long championId, Long lastPlayTime, Integer championLevel, String summonerId, Integer championPoints, Long championPointsSinceLastLevel, Integer tokensEarned) {
         this.championPointsUntilNextLevel = championPointsUntilNextLevel;

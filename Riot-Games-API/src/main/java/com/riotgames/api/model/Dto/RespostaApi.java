@@ -8,7 +8,15 @@ public class RespostaApi {
         this.status = status;
     }
 
-    private static class Status{
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    private static class Status {
         String message;
         Integer status_code;
 
@@ -32,13 +40,5 @@ public class RespostaApi {
         public void setStatus_code(Integer status_code) {
             this.status_code = status_code;
         }
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 }

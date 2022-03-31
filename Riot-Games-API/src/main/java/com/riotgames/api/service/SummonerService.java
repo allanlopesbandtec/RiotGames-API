@@ -2,8 +2,8 @@ package com.riotgames.api.service;
 
 import com.google.gson.Gson;
 import com.riotgames.api.client.RiotgamesClient;
-import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.model.Summoner;
+import com.riotgames.api.model.error.ApiError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

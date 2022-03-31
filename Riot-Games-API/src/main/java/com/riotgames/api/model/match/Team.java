@@ -6,13 +6,13 @@ import java.util.List;
 
 public class Team {
 
-     private List<Ban> bans;
+    private List<Ban> bans;
 
-     private List<Objectives> objectives;
+    private List<Objectives> objectives;
 
-     private Integer teamId;
+    private Integer teamId;
 
-     private Boolean win;
+    private Boolean win;
 
     public Team(List<Ban> bans, List<Objectives> objectives, Integer teamId, Boolean win) {
         this.bans = bans;

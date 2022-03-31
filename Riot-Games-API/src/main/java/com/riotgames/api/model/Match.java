@@ -16,8 +16,6 @@ public class Match {
 
     private List<Team> teams;
 
-
-
     public Match(String matchId, List<String> participants, String platformId, Integer queueId, List<Team> teams) {
         this.matchId = matchId;
         this.participants = participants;

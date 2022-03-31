@@ -18,7 +18,7 @@ public class RiotgamesClient {
         try {
             //Patch -> enumeração 12.5.1
             //Linguagem de retorno pt_BR
-            result = restClient.sendReceive("/cdn/aaa12.5.1/data/pt_BR/champion.json", RequestApiEnum.CHAMPION, ResponseEntity.class);
+            result = restClient.sendReceive("/cdn/12.5.1/data/pt_BR/champion.json", RequestApiEnum.CHAMPION, ResponseEntity.class);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {

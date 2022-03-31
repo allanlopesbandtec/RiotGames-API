@@ -51,7 +51,6 @@ public class ApiError extends Exception {
     }
 
 
-
     public ApiError() {
     }
 
