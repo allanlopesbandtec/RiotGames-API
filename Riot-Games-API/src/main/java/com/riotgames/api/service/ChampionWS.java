@@ -2,12 +2,9 @@ package com.riotgames.api.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.riotgames.api.client.RiotgamesClient;
-import com.riotgames.api.model.ApiError;
+import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.model.Champion;
-import com.riotgames.api.model.Dto.ChampionByMastery;
 import com.riotgames.api.model.Dto.ChampionDto;
-import com.riotgames.api.model.Dto.ChampionMasteryDto;
-import com.riotgames.api.model.Summoner;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -142,6 +139,8 @@ public class ChampionWS {
                 //Caso a lista esteja vazia não há muito o que ser feito, pode ser um erro no servidor...
                 throw new ApiError(ChampionWS.class, "allChampionsList", "Map of champions isEmpty", HttpStatus.NO_CONTENT);
             }
+        } catch (ApiError ex) {
+            throw ex;
         } catch (Exception ex) {
             throw new ApiError(ChampionWS.class, "allChampionsList", "Error to List the mapped champions", ex.getLocalizedMessage());
         }

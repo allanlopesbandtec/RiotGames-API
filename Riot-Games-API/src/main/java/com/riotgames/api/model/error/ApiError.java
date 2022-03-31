@@ -1,4 +1,4 @@
-package com.riotgames.api.model;
+package com.riotgames.api.model.error;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,7 @@
-package com.riotgames.api.model;
+package com.riotgames.api.model.error;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.riotgames.api.model.Status;
 
 
 public class ErrorJsonApi {

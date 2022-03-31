@@ -1,6 +1,6 @@
 package com.riotgames.api.client;
 
-import com.riotgames.api.model.ApiError;
+import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.model.enumerator.RequestApiEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

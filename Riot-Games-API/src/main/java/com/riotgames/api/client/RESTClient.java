@@ -2,7 +2,7 @@ package com.riotgames.api.client;
 
 import com.google.gson.Gson;
 import com.riotgames.api.utils.UtilsWS;
-import com.riotgames.api.model.ApiError;
+import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.model.enumerator.RequestApiEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
