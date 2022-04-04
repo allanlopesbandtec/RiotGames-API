@@ -1,53 +1,54 @@
 package com.riotgames.api.model.error;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(namespace = "Error")
 public class ErrorXmlApi {
 
-    public String Code;
 
-    public String Message;
+    @JacksonXmlElementWrapper(namespace = "code", localName = "Code")
+    public String code;
 
-    public String RequestId;
+    @JacksonXmlElementWrapper(namespace = "message", localName = "Message")
+    public String message;
 
-    public String HostId;
+    @JacksonXmlElementWrapper(namespace = "requestId", localName = "RequestId")
+    public String requestId;
 
-    @JsonIgnore
+    @JacksonXmlElementWrapper(namespace = "hostId", localName = "HostId")
+    public String hostId;
+
     public String getCode() {
-        return Code;
+        return code;
     }
 
     public void setCode(String code) {
-        Code = code;
+        this.code = code;
     }
 
-    @JsonIgnore
     public String getMessage() {
-        return Message;
+        return message;
     }
 
     public void setMessage(String message) {
-        Message = message;
+        this.message = message;
     }
 
-    @JsonIgnore
     public String getRequestId() {
-        return RequestId;
+        return requestId;
     }
 
     public void setRequestId(String requestId) {
-        RequestId = requestId;
+        this.requestId = requestId;
     }
 
-    @JsonIgnore
     public String getHostId() {
-        return HostId;
+        return hostId;
     }
 
     public void setHostId(String hostId) {
-        HostId = hostId;
+        this.hostId = hostId;
     }
 }
