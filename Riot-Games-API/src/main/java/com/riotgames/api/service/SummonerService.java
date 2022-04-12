@@ -13,9 +13,6 @@ import org.springframework.stereotype.Service;
 public class SummonerService {
 
     @Autowired
-    private ChampionWS championWS;
-
-    @Autowired
     private RiotgamesClient riotgamesClient;
 
     @Autowired

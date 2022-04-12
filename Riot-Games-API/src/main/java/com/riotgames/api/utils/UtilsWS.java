@@ -11,6 +11,9 @@ import com.riotgames.api.model.enumerator.RequestApiEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.Map;
 
 @Component
 public class UtilsWS {
@@ -59,6 +62,27 @@ public class UtilsWS {
         }
 
         return errorXmlApi;
+    }
+
+    public static String buildUri(Map<String, ?> requestMap, String url, String uri) throws ApiError {
+        UriComponentsBuilder endpoint = UriComponentsBuilder.fromHttpUrl(url + "/" + uri);;
+
+        if (!requestMap.isEmpty()) {
+
+            try {
+                for (Map.Entry<String, ?> uriParams : requestMap.entrySet()) {
+
+                    if (uriParams.getValue() != null) {
+                        endpoint.queryParam(uriParams.getKey(), uriParams.getValue());
+                    }
+                }
+            } catch (Exception ex) {
+                throw new ApiError(UtilsWS.class, "buildUri", "Error to create request params", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        }
+
+        return endpoint.toUriString();
     }
 
     @Autowired

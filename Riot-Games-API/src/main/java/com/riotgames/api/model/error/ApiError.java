@@ -1,7 +1,12 @@
 package com.riotgames.api.model.error;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.riotgames.api.model.enumerator.RequestApiEnum;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.Nullable;
 
 //Classe de erros do projeto
 public class ApiError extends Exception {
@@ -23,13 +28,18 @@ public class ApiError extends Exception {
     //Corpo do erro, seja criado dentro da API ou de uma Exception qualquer
     private Object apiError;
 
+    //API a qual foi requisitada
+    private String urlPesquisa;
+
+
     //Construtor para erros em request, usado no sendReceive
-    public ApiError(Class clazz, String method, String description, Object apiError, HttpStatus httpStatus) {
+    public ApiError(Class clazz, String method, String description, Object apiError, HttpStatus httpStatus, RequestApiEnum requestApiEnum) {
         this.clazz = clazz;
         this.method = method;
         this.description = description;
         this.apiError = apiError;
         this.httpStatus = httpStatus;
+        this.urlPesquisa = requestApiEnum.getClientAmbiente();
     }
 
 
@@ -125,6 +135,14 @@ public class ApiError extends Exception {
     }
 
     public void setApiError(String apiError) {
+        this.apiError = apiError;
+    }
+
+    public String getUrlPesquisa() {
+        return urlPesquisa;
+    }
+
+    public void setApiError(Object apiError) {
         this.apiError = apiError;
     }
 }

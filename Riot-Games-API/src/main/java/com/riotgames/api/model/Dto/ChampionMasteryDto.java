@@ -4,20 +4,20 @@ public class ChampionMasteryDto {
 
     private Long key;
 
-    private String nomeCampeao;
+    private String championName;
 
-    private Integer pontosDeMaestria;
+    private Integer masteryPoints;
 
-    private Integer nivelMaestria;
+    private Integer masteryLevel;
 
-    private Boolean ganhouBau;
+    private Boolean chestWinned;
 
-    public ChampionMasteryDto(ChampionByMastery championByMastery, ChampionDto campeao) {
-        this.key = championByMastery.getIdCampeao();
-        this.nomeCampeao = campeao.getName();
-        this.pontosDeMaestria = championByMastery.getPontosComCampeao();
-        this.nivelMaestria = championByMastery.getNivelCampeao();
-        this.ganhouBau = championByMastery.getBauHabilitado();
+    public ChampionMasteryDto(ChampionByMastery championByMastery, ChampionDto champion) {
+        this.key = championByMastery.getChampionId();
+        this.championName = champion.getName();
+        this.masteryPoints = championByMastery.getChampionPoints();
+        this.masteryLevel = championByMastery.getChampionLevel();
+        this.chestWinned = championByMastery.getChestGranted();
     }
 
     public Long getKey() {
@@ -28,35 +28,35 @@ public class ChampionMasteryDto {
         this.key = key;
     }
 
-    public String getNomeCampeao() {
-        return nomeCampeao;
+    public String getChampionName() {
+        return championName;
     }
 
-    public void setNomeCampeao(String nomeCampeao) {
-        this.nomeCampeao = nomeCampeao;
+    public void setChampionName(String championName) {
+        this.championName = championName;
     }
 
-    public Integer getPontosDeMaestria() {
-        return pontosDeMaestria;
+    public Integer getMasteryPoints() {
+        return masteryPoints;
     }
 
-    public void setPontosDeMaestria(Integer pontosDeMaestria) {
-        this.pontosDeMaestria = pontosDeMaestria;
+    public void setMasteryPoints(Integer masteryPoints) {
+        this.masteryPoints = masteryPoints;
     }
 
-    public Integer getNivelMaestria() {
-        return nivelMaestria;
+    public Integer getMasteryLevel() {
+        return masteryLevel;
     }
 
-    public void setNivelMaestria(Integer nivelMaestria) {
-        this.nivelMaestria = nivelMaestria;
+    public void setMasteryLevel(Integer masteryLevel) {
+        this.masteryLevel = masteryLevel;
     }
 
-    public Boolean getGanhouBau() {
-        return ganhouBau;
+    public Boolean getChestWinned() {
+        return chestWinned;
     }
 
-    public void setGanhouBau(Boolean ganhouBau) {
-        this.ganhouBau = ganhouBau;
+    public void setChestWinned(Boolean chestWinned) {
+        this.chestWinned = chestWinned;
     }
 }

@@ -11,6 +11,8 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
+
 @Service
 public class RESTClient {
 
@@ -21,7 +23,7 @@ public class RESTClient {
     private Gson gson;
 
     //Método que vai enviar requisições para as APIs
-    public ResponseEntity<String> sendReceive(String uri, RequestApiEnum requestApiEnum, Class retorno) throws ApiError {
+    public ResponseEntity<String> sendReceive(Map<String, String> requestParams, String uri, RequestApiEnum requestApiEnum, Class retorno) throws ApiError {
         //Resposta e request
         ResponseEntity<String> responseEntity;
         HttpEntity<String> entity = new HttpEntity<>(getHeaders());
@@ -31,7 +33,7 @@ public class RESTClient {
             //Uri passada com base no método
             //Headers para request
             responseEntity = restTemplate.exchange(
-                    requestApiEnum.getClientAmbiente() + uri,
+                    UtilsWS.buildUri(requestParams, requestApiEnum.getClientAmbiente(), uri),
                     HttpMethod.GET,
                     entity,
                     String.class);
@@ -55,7 +57,8 @@ public class RESTClient {
                     "sendReceive",
                     "Error to send request to the RiotGames API",
                     UtilsWS.returnErrors(responseException.getBody().toString(), requestApiEnum) ,
-                    responseException.getStatusCode()
+                    responseException.getStatusCode(),
+                    requestApiEnum
             );
         }
 
@@ -67,7 +70,7 @@ public class RESTClient {
         HttpHeaders headers = new HttpHeaders();
 
         try {
-            headers.add("X-Riot-Token", "RGAPI-536a7bf3-876f-48a5-81b2-5769dcf3ff5e");
+            headers.add("X-Riot-Token", "RGAPI-2d9f77fe-d45f-42ed-acc7-6c5cf69b7354");
         } catch (Exception ex) {
             throw new ApiError(
                     RESTClient.class,

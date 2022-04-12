@@ -3,17 +3,17 @@ package com.riotgames.api.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.riotgames.api.client.RiotgamesClient;
 import com.riotgames.api.model.Champion;
+import com.riotgames.api.model.Dto.ChampionByMastery;
 import com.riotgames.api.model.Dto.ChampionDto;
+import com.riotgames.api.model.Dto.ChampionMasteryDto;
+import com.riotgames.api.model.Summoner;
 import com.riotgames.api.model.error.ApiError;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +24,9 @@ public class ChampionWS {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private SummonerService summonerService;
 
     private Map<String, Champion> mapChampions() throws ApiError {
         Map<String, Champion> mapChampions = new HashMap<>();
@@ -43,6 +46,22 @@ public class ChampionWS {
         }
 
         return mapChampions;
+    }
+
+    private List<ChampionByMastery> championMasteryBySummoner(String encryptedSummonerId) throws ApiError {
+        ChampionByMastery[] championMastery;
+        String request;
+
+        try {
+            request = riotgamesClient.getChampionsByMastery(encryptedSummonerId);
+            championMastery = objectMapper.readValue(request, ChampionByMastery[].class);
+        } catch (ApiError ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new ApiError(ChampionWS.class, "championMasteryBySummoner", "Error to list championsByMastery", ex.getLocalizedMessage());
+        }
+
+        return new ArrayList<>(Arrays.asList(championMastery));
     }
 
     public List<Champion> allChampionsList() throws ApiError {
@@ -71,28 +90,41 @@ public class ChampionWS {
         return allChampionsList;
     }
 
-//        public List<ChampionMasteryDto> campeaoPorMaestrias(String nick) throws ApiError {
-//        //Buscando invocador
-//        Summoner summoner = buscaInvocador(nick);
-//        //Recuperando maestrias por invocador
-//        List<ChampionByMastery> championByMasteries = riotGamesApi.getCampeoesMaestriaPorInvocador(summoner.getId());
-//        //Todos os champs
-//        List<ChampionDto> championDto = championWS.getCampeaoDtos();
-//        //Lista que vamos retornar Api (Sim vou mudar o nome da classe)
-//        List<ChampionMasteryDto> championMasteryDtos = new ArrayList<>();
-//        //1 for para maestrias do jogador e segundo para Campeao
-//        for (ChampionByMastery cPorM : championByMasteries) {
-//            String idCampeao = cPorM.getIdCampeao().toString();
-//            for (ChampionDto c : championDto) {
-//                if (c.getKey().equals(idCampeao)) {
-//                    ChampionMasteryDto championMasteryDto = new ChampionMasteryDto(cPorM, c);
-//                    championMasteryDtos.add(championMasteryDto);
-//                }
-//            }
-//        }
-//
-//        return championMasteryDtos;
-//    }
+    public List<ChampionMasteryDto> championByMastery(String nick) throws ApiError {
+        //Buscando invocador
+        Summoner summoner = summonerService.findSummoner(nick);
+        //Recuperando maestrias por invocador
+        List<ChampionByMastery> championByMasteries = championMasteryBySummoner(summoner.getId());
+
+        //Todos os champs
+        List<ChampionDto> championDto = getCampeaoDtos();
+
+
+        //Lista que vamos retornar Api
+        List<ChampionMasteryDto> championMasteryDtos = new ArrayList<>();
+
+        try {
+            //1 for para maestrias do jogador e segundo para Campeao
+            for (ChampionByMastery cPorM : championByMasteries) {
+                String chmapionId = cPorM.getChampionId().toString();
+
+                if (!championDto.isEmpty()) {
+                    for (ChampionDto c : championDto) {
+                        if (c.getKey().equals(chmapionId)) {
+                            ChampionMasteryDto championMasteryDto = new ChampionMasteryDto(cPorM, c);
+                            championMasteryDtos.add(championMasteryDto);
+                        }
+                    }
+                } else {
+                    throw new ApiError(ChampionWS.class, "championByMastery", "Mastery list is empty", HttpStatus.NO_CONTENT);
+                }
+            }
+        } catch (Exception ex) {
+            throw new ApiError(ChampionWS.class, "championByMastery", "Error to merge champions with mastery ranks", ex.getLocalizedMessage());
+        }
+
+        return championMasteryDtos;
+    }
 
     public List<ChampionDto> getCampeaoDtos() throws ApiError {
         return allChampionsList().stream().map(ChampionDto::new).collect(Collectors.toList());

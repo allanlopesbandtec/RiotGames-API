@@ -1,24 +1,35 @@
 package com.riotgames.api.model.Dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ChampionByMastery {
 
-    private final Long championPointsUntilNextLevel;
+    @JsonProperty(namespace = "championId")
+    private Long championId;
 
-    private final Boolean chestGranted;
+    @JsonProperty(namespace = "championLevel")
+    private Integer championLevel;
 
-    private final Long championId;
+    @JsonProperty(namespace = "championPoints")
+    private Integer championPoints;
 
-    private final Long lastPlayTime;
+    @JsonProperty(namespace = "lastPlayTime")
+    private Long lastPlayTime;
 
-    private final Integer championLevel;
+    @JsonProperty(namespace = "championPointsSinceLastLevel")
+    private Long championPointsSinceLastLevel;
 
-    private final String summonerId;
+    @JsonProperty(namespace = "championPointsUntilNextLevel")
+    private Long championPointsUntilNextLevel;
 
-    private final Integer championPoints;
+    @JsonProperty(namespace = "chestGranted")
+    private Boolean chestGranted;
 
-    private final Long championPointsSinceLastLevel;
+    @JsonProperty(namespace = "tokensEarned")
+    private Integer tokensEarned;
 
-    private final Integer tokensEarned;
+    @JsonProperty(namespace = "summonerId")
+    private String summonerId;
 
     public ChampionByMastery(Long championPointsUntilNextLevel, Boolean chestGranted, Long championId, Long lastPlayTime, Integer championLevel, String summonerId, Integer championPoints, Long championPointsSinceLastLevel, Integer tokensEarned) {
         this.championPointsUntilNextLevel = championPointsUntilNextLevel;
@@ -32,40 +43,75 @@ public class ChampionByMastery {
         this.tokensEarned = tokensEarned;
     }
 
-    public Long getPontosparaOProximoNivelCampeao() {
-        return championPointsUntilNextLevel;
-    }
-
-    public Boolean getBauHabilitado() {
-        return chestGranted;
-    }
-
-    public Long getIdCampeao() {
+    public Long getChampionId() {
         return championId;
     }
 
-    public Long getUltimaVezJogado() {
-        return lastPlayTime;
+    public void setChampionId(Long championId) {
+        this.championId = championId;
     }
 
-    public Integer getNivelCampeao() {
+    public Integer getChampionLevel() {
         return championLevel;
     }
 
-    public String getIdInvocador() {
-        return summonerId;
+    public void setChampionLevel(Integer championLevel) {
+        this.championLevel = championLevel;
     }
 
-    public Integer getPontosComCampeao() {
+    public Integer getChampionPoints() {
         return championPoints;
     }
 
-    public Long getPontosGanhosDesdeUltimoNivel() {
+    public void setChampionPoints(Integer championPoints) {
+        this.championPoints = championPoints;
+    }
+
+    public Long getLastPlayTime() {
+        return lastPlayTime;
+    }
+
+    public void setLastPlayTime(Long lastPlayTime) {
+        this.lastPlayTime = lastPlayTime;
+    }
+
+    public Long getChampionPointsSinceLastLevel() {
         return championPointsSinceLastLevel;
     }
 
+    public void setChampionPointsSinceLastLevel(Long championPointsSinceLastLevel) {
+        this.championPointsSinceLastLevel = championPointsSinceLastLevel;
+    }
 
-    public Integer getQuatidadeS() {
+    public Long getChampionPointsUntilNextLevel() {
+        return championPointsUntilNextLevel;
+    }
+
+    public void setChampionPointsUntilNextLevel(Long championPointsUntilNextLevel) {
+        this.championPointsUntilNextLevel = championPointsUntilNextLevel;
+    }
+
+    public Boolean getChestGranted() {
+        return chestGranted;
+    }
+
+    public void setChestGranted(Boolean chestGranted) {
+        this.chestGranted = chestGranted;
+    }
+
+    public Integer getTokensEarned() {
         return tokensEarned;
+    }
+
+    public void setTokensEarned(Integer tokensEarned) {
+        this.tokensEarned = tokensEarned;
+    }
+
+    public String getSummonerId() {
+        return summonerId;
+    }
+
+    public void setSummonerId(String summonerId) {
+        this.summonerId = summonerId;
     }
 }

@@ -18,7 +18,7 @@ public class SummonerController {
     private SummonerService summonerService;
 
     @GetMapping("/{nick}")
-    public ResponseEntity<Object> buscarInvocador(@PathVariable String nick) throws ApiError {
+    public ResponseEntity<Object> searchSummoner(@PathVariable String nick) throws ApiError {
         ResponseEntity<Object> response;
 
         try {
