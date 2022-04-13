@@ -58,7 +58,7 @@ public class RESTClient {
                     "Error to send request to the RiotGames API",
                     UtilsWS.returnErrors(responseException.getBody().toString(), requestApiEnum) ,
                     responseException.getStatusCode(),
-                    requestApiEnum
+                    UtilsWS.buildUri(requestParams, requestApiEnum.getClientAmbiente(), uri)
             );
         }
 
@@ -70,7 +70,8 @@ public class RESTClient {
         HttpHeaders headers = new HttpHeaders();
 
         try {
-            headers.add("X-Riot-Token", "RGAPI-2d9f77fe-d45f-42ed-acc7-6c5cf69b7354");
+            headers.add("X-Riot-Token", "RGAPI-cb94d455-4999-4841-8c6e-a511eaa99671");
+//            headers.add("Content-Encoding", "gzip");
         } catch (Exception ex) {
             throw new ApiError(
                     RESTClient.class,

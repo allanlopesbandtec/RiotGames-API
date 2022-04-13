@@ -65,7 +65,7 @@ public class UtilsWS {
     }
 
     public static String buildUri(Map<String, ?> requestMap, String url, String uri) throws ApiError {
-        UriComponentsBuilder endpoint = UriComponentsBuilder.fromHttpUrl(url + "/" + uri);;
+        UriComponentsBuilder endpoint = UriComponentsBuilder.fromHttpUrl(url + uri);;
 
         if (requestMap != null && !requestMap.isEmpty()) {
 
@@ -81,7 +81,6 @@ public class UtilsWS {
             }
 
         }
-
         return endpoint.toUriString();
     }
 

@@ -1,6 +1,6 @@
 package com.riotgames.api.model.Dto;
 
-import com.riotgames.api.model.Champion;
+import com.riotgames.api.model.champion.Champion;
 
 import java.util.List;
 

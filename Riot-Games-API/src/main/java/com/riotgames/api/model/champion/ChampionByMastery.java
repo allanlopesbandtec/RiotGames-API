@@ -1,4 +1,4 @@
-package com.riotgames.api.model.Dto;
+package com.riotgames.api.model.champion;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

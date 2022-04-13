@@ -33,13 +33,13 @@ public class ApiError extends Exception {
 
 
     //Construtor para erros em request, usado no sendReceive
-    public ApiError(Class clazz, String method, String description, Object apiError, HttpStatus httpStatus, RequestApiEnum requestApiEnum) {
+    public ApiError(Class clazz, String method, String description, Object apiError, HttpStatus httpStatus, String urlPesquisa) {
         this.clazz = clazz;
         this.method = method;
         this.description = description;
         this.apiError = apiError;
         this.httpStatus = httpStatus;
-        this.urlPesquisa = requestApiEnum.getClientAmbiente();
+        this.urlPesquisa = urlPesquisa;
     }
 
 
@@ -49,6 +49,7 @@ public class ApiError extends Exception {
         this.method = method;
         this.description = description;
         this.httpStatus = httpStatus;
+        this.urlPesquisa = "";
     }
 
     //Construtor para erros genéricos nas classes
@@ -58,6 +59,7 @@ public class ApiError extends Exception {
         this.description = description;
         this.apiError = bodyErrorRequest;
         this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        this.urlPesquisa = "";
     }
 
 

@@ -5,10 +5,7 @@ import com.riotgames.api.service.ChampionWS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("champions")
@@ -22,7 +19,7 @@ public class ChampionController {
         ResponseEntity<Object> response = null;
 
         try {
-            response = new ResponseEntity<>(championWS.allChampionsList(), HttpStatus.OK);
+            response = new ResponseEntity<>(championWS.getChampionsList(), HttpStatus.OK);
         } catch (ApiError ex) {
             response = new ResponseEntity<>(ex, ex.getHttpStatus());
         }
@@ -35,11 +32,26 @@ public class ChampionController {
         ResponseEntity<Object> response = null;
 
         try {
-            response = new ResponseEntity<>(championWS.championByMastery(nick), HttpStatus.OK);
+            response = new ResponseEntity<>(championWS.getChampionsByMastery(nick), HttpStatus.OK);
         } catch (ApiError ex) {
             response = new ResponseEntity<>(ex, ex.getHttpStatus());
         }
 
         return response;
     }
+
+    @GetMapping("/by-lane/{nick}")
+    public ResponseEntity<Object> allChampionsByMastery(@PathVariable String nick,
+                                                        @RequestParam(name = "lane", required = false) String lane) {
+        ResponseEntity<Object> response = null;
+
+        try {
+            response = new ResponseEntity<>(championWS.getCustomSearchChampions(nick, lane), HttpStatus.OK);
+        } catch (ApiError ex) {
+            response = new ResponseEntity<>(ex, ex.getHttpStatus());
+        }
+
+        return response;
+    }
+
 }

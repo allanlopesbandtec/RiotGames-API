@@ -85,4 +85,20 @@ public class RiotgamesClient {
 
         return result.getBody();
     }
+
+    public String findLastMatch(String matchId) throws ApiError {
+        ResponseEntity<String> result;
+
+        String uri = "/lol/match/v5/matches/" + matchId;
+
+        try {
+            result = restClient.sendReceive(null, uri, RequestApiEnum.AMERICAS, ResponseEntity.class);
+        } catch (ApiError ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new ApiError(RiotgamesClient.class, "getChampionsByMastery", "Falha ao efetuar request", ex.getLocalizedMessage());
+        }
+
+        return result.getBody();
+    }
 }

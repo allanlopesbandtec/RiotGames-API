@@ -29,7 +29,21 @@ public class MatchController {
 
         try {
             MatchRequest matchRequest = new MatchRequest(startTime, endTime, queue, type, start, quantidade);
-            response = new ResponseEntity<>(matchWS.findMatchId(nick, matchRequest), HttpStatus.OK);
+            response = new ResponseEntity<>(matchWS.getMatchId(nick, matchRequest), HttpStatus.OK);
+        } catch (ApiError ex) {
+            response = new ResponseEntity<>(ex, ex.getHttpStatus());
+        }
+
+        return response;
+    }
+
+    @GetMapping("/matchId/{matchId}")
+    public ResponseEntity<Object> getMatch(@PathVariable String matchId) {
+
+        ResponseEntity<Object> response;
+
+        try {
+            response = new ResponseEntity<>(matchWS.getLastMatch(matchId), HttpStatus.OK);
         } catch (ApiError ex) {
             response = new ResponseEntity<>(ex, ex.getHttpStatus());
         }

@@ -1,10 +1,7 @@
-package com.riotgames.api.model;
+package com.riotgames.api.model.champion;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.riotgames.api.model.champion.Image;
-import com.riotgames.api.model.champion.Info;
-import com.riotgames.api.model.champion.Stats;
 
 import java.util.HashMap;
 import java.util.List;

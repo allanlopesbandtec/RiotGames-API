@@ -1,5 +1,9 @@
 package com.riotgames.api.model.Dto;
 
+import com.riotgames.api.model.champion.ChampionByMastery;
+
+import java.util.List;
+
 public class ChampionMasteryDto {
 
     private Long key;
@@ -12,12 +16,15 @@ public class ChampionMasteryDto {
 
     private Boolean chestWinned;
 
+    private List<String> tags;
+
     public ChampionMasteryDto(ChampionByMastery championByMastery, ChampionDto champion) {
         this.key = championByMastery.getChampionId();
         this.championName = champion.getName();
         this.masteryPoints = championByMastery.getChampionPoints();
         this.masteryLevel = championByMastery.getChampionLevel();
         this.chestWinned = championByMastery.getChestGranted();
+        this.tags = champion.getTags();
     }
 
     public Long getKey() {
@@ -58,5 +65,13 @@ public class ChampionMasteryDto {
 
     public void setChestWinned(Boolean chestWinned) {
         this.chestWinned = chestWinned;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }
