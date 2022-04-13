@@ -1,6 +1,7 @@
 package com.riotgames.api.controller;
 
 import com.riotgames.api.model.error.ApiError;
+import com.riotgames.api.model.match.MatchRequest;
 import com.riotgames.api.service.MatchWS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +16,20 @@ public class MatchController {
     private MatchWS matchWS;
 
     @GetMapping("/{nick}")
-    public ResponseEntity<Object> searchMatchs(@PathVariable String nick,
-                                               @RequestParam Integer quantidade) throws ApiError {
+    public ResponseEntity<Object> searchMatchs(
+            @PathVariable String nick,
+            @RequestParam(name = "quantidade", required = false) Integer quantidade,
+            @RequestParam(name = "startTime", required = false) Long startTime,
+            @RequestParam(name = "endTime", required = false) Long endTime,
+            @RequestParam(name = "queue", required = false) Integer queue,
+            @RequestParam(name = "type", required = false) String type,
+            @RequestParam(name = "start", required = false) Integer start) {
+
         ResponseEntity<Object> response;
 
         try {
-            response = new ResponseEntity<>(matchWS.buscarIdPartidas(nick, quantidade), HttpStatus.OK);
+            MatchRequest matchRequest = new MatchRequest(startTime, endTime, queue, type, start, quantidade);
+            response = new ResponseEntity<>(matchWS.findMatchId(nick, matchRequest), HttpStatus.OK);
         } catch (ApiError ex) {
             response = new ResponseEntity<>(ex, ex.getHttpStatus());
         }

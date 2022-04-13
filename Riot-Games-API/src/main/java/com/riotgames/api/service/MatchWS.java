@@ -27,12 +27,11 @@ public class MatchWS {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public List<String> buscarIdPartidas(String nick, Integer quantidade) throws ApiError {
+    public List<String> findMatchId(String nick, MatchRequest matchRequest) throws ApiError {
         String[] matchList;
         String request;
 
         Summoner summoner = summonerService.findSummoner(nick);
-        MatchRequest matchRequest = new MatchRequest(null, null, null, null, null, quantidade);
 
         try {
             request = riotgamesClient.findMatchList(summoner.getPuuId(), matchRequest);

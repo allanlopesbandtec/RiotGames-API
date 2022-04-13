@@ -71,12 +71,12 @@ public class RiotgamesClient {
     public String findMatchList(String puuId, MatchRequest matchRequest) throws ApiError {
         ResponseEntity<String> result;
 
-        Map uriComponents = objectMapper.convertValue(matchRequest, Map.class);
+        Map<String, String> uriComponents = objectMapper.convertValue(matchRequest, Map.class);
 
-        String uri = String.format("/lol/match/v5/matches/by-puuid/{%s}/ids", puuId);
+        String uri = String.format("/lol/match/v5/matches/by-puuid/%s/ids", puuId);
 
         try {
-            result = restClient.sendReceive(uriComponents, uri, RequestApiEnum.BR, ResponseEntity.class);
+            result = restClient.sendReceive(uriComponents, uri, RequestApiEnum.AMERICAS, ResponseEntity.class);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {

@@ -67,7 +67,7 @@ public class UtilsWS {
     public static String buildUri(Map<String, ?> requestMap, String url, String uri) throws ApiError {
         UriComponentsBuilder endpoint = UriComponentsBuilder.fromHttpUrl(url + "/" + uri);;
 
-        if (!requestMap.isEmpty()) {
+        if (requestMap != null && !requestMap.isEmpty()) {
 
             try {
                 for (Map.Entry<String, ?> uriParams : requestMap.entrySet()) {
