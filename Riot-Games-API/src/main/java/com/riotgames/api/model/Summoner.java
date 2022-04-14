@@ -34,7 +34,7 @@ public class Summoner {
         this.id = id;
     }
 
-    public String getIdConta() {
+    public String getAccountId() {
         return accountId;
     }
 
@@ -42,15 +42,15 @@ public class Summoner {
         this.accountId = accountId;
     }
 
-    public String getPuuId() {
+    public String getPuuid() {
         return puuid;
     }
 
-    public void setPuuId(String puuId) {
-        this.puuid = puuId;
+    public void setPuuid(String puuid) {
+        this.puuid = puuid;
     }
 
-    public String getNick() {
+    public String getName() {
         return name;
     }
 
@@ -58,7 +58,7 @@ public class Summoner {
         this.name = name;
     }
 
-    public Integer getIdIconePerfil() {
+    public Integer getProfileIconId() {
         return profileIconId;
     }
 
@@ -66,7 +66,7 @@ public class Summoner {
         this.profileIconId = profileIconId;
     }
 
-    public Long getDataRevisao() {
+    public Long getRevisionDate() {
         return revisionDate;
     }
 
@@ -74,7 +74,7 @@ public class Summoner {
         this.revisionDate = revisionDate;
     }
 
-    public Integer getLevelInvocador() {
+    public Integer getSummonerLevel() {
         return summonerLevel;
     }
 

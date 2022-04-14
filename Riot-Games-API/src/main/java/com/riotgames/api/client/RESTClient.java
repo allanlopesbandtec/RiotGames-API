@@ -44,7 +44,6 @@ public class RESTClient {
             if (ex instanceof HttpStatusCodeException){
                //Caso o erro for dessa instancia vai criar o objeto tratado com status
                 HttpStatusCodeException httpStatusError = (HttpStatusCodeException) ex;
-//                Object responseError = gson.fromJson(((HttpStatusCodeException) ex).getResponseBodyAsString(), ex.getClass());
                 responseException = new ResponseEntity<>(httpStatusError.getResponseBodyAsString(), httpStatusError.getStatusCode());
             } else {
                 //Erro dentro do método de validação Http ou erro "desconhecido", vai criar um erro com status genérico
@@ -70,7 +69,7 @@ public class RESTClient {
         HttpHeaders headers = new HttpHeaders();
 
         try {
-            headers.add("X-Riot-Token", "RGAPI-cb94d455-4999-4841-8c6e-a511eaa99671");
+            headers.add("X-Riot-Token", "RGAPI-07661dda-a5d1-43c9-9164-343818615db5");
             headers.add("Content-Encoding", "gzip, deflate, br");
             headers.add("Content-Type", "application/json;charset=utf-8");
             headers.add("Accept-Language","en-US,en;q=0.9,pt-BR;q=0.8,pt;q=0.7");

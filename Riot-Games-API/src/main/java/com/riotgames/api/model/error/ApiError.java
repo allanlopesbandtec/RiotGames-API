@@ -1,12 +1,7 @@
 package com.riotgames.api.model.error;
 
-import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.riotgames.api.model.enumerator.RequestApiEnum;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.lang.Nullable;
 
 //Classe de erros do projeto
 public class ApiError extends Exception {
@@ -29,17 +24,17 @@ public class ApiError extends Exception {
     private Object apiError;
 
     //API a qual foi requisitada
-    private String urlPesquisa;
+    private String searchUrl;
 
 
     //Construtor para erros em request, usado no sendReceive
-    public ApiError(Class clazz, String method, String description, Object apiError, HttpStatus httpStatus, String urlPesquisa) {
+    public ApiError(Class clazz, String method, String description, Object apiError, HttpStatus httpStatus, String searchUrl) {
         this.clazz = clazz;
         this.method = method;
         this.description = description;
         this.apiError = apiError;
         this.httpStatus = httpStatus;
-        this.urlPesquisa = urlPesquisa;
+        this.searchUrl = searchUrl;
     }
 
 
@@ -49,7 +44,7 @@ public class ApiError extends Exception {
         this.method = method;
         this.description = description;
         this.httpStatus = httpStatus;
-        this.urlPesquisa = "";
+        this.searchUrl = "";
     }
 
     //Construtor para erros genéricos nas classes
@@ -59,7 +54,7 @@ public class ApiError extends Exception {
         this.description = description;
         this.apiError = bodyErrorRequest;
         this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-        this.urlPesquisa = "";
+        this.searchUrl = "";
     }
 
 
@@ -140,8 +135,8 @@ public class ApiError extends Exception {
         this.apiError = apiError;
     }
 
-    public String getUrlPesquisa() {
-        return urlPesquisa;
+    public String getSearchUrl() {
+        return searchUrl;
     }
 
     public void setApiError(Object apiError) {

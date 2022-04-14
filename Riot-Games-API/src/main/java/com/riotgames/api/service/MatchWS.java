@@ -36,7 +36,7 @@ public class MatchWS {
         Summoner summoner = summonerWS.findSummoner(nick);
 
         try {
-            request = riotgamesClient.findMatchList(summoner.getPuuId(), matchRequest);
+            request = riotgamesClient.findMatchList(summoner.getPuuid(), matchRequest);
             matchList = objectMapper.readValue(request, String[].class);
         } catch (ApiError ex) {
             throw ex;
