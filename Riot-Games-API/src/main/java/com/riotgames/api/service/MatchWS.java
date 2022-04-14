@@ -51,13 +51,13 @@ public class MatchWS {
         }
     }
 
-    public String getLastMatch(String matchId) throws ApiError {
+    public String getLastMatch(String nick) throws ApiError {
         MatchRequest matchRequest = null;
 
-//        List<String> listaPartidas = getMatchId(nick, null);
+        List<String> listaPartidas = getMatchId(nick, null);
 //        System.out.println("Última partida encontrada -" + listaPartidas.get(0));
 
-        String todos = riotgamesClient.findLastMatch(matchId);
+        String todos = riotgamesClient.findLastMatch(listaPartidas.get(0));
 
         JSONObject campeoes = new JSONObject(todos);
 

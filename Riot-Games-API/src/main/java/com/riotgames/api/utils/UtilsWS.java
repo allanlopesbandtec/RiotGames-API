@@ -3,6 +3,8 @@ package com.riotgames.api.utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.google.gson.Gson;
+import com.riotgames.api.client.RESTClient;
+import com.riotgames.api.client.RiotgamesClient;
 import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.model.error.ErrorJsonApi;
 import com.riotgames.api.model.error.ErrorXmlApi;
@@ -10,6 +12,7 @@ import com.riotgames.api.model.Status;
 import com.riotgames.api.model.enumerator.RequestApiEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -19,6 +22,12 @@ import java.util.Map;
 public class UtilsWS {
 
     private static Gson gson;
+
+    private static RESTClient restClient;
+
+    private static ObjectMapper objectMapper;
+
+    public static String version;
 
     public static Object returnErrors(String error, RequestApiEnum requestApiEnum) throws ApiError {
         Object result;
@@ -65,7 +74,8 @@ public class UtilsWS {
     }
 
     public static String buildUri(Map<String, ?> requestMap, String url, String uri) throws ApiError {
-        UriComponentsBuilder endpoint = UriComponentsBuilder.fromHttpUrl(url + uri);;
+        UriComponentsBuilder endpoint = UriComponentsBuilder.fromHttpUrl(url + uri);
+        ;
 
         if (requestMap != null && !requestMap.isEmpty()) {
 
@@ -84,8 +94,35 @@ public class UtilsWS {
         return endpoint.toUriString();
     }
 
+    public static void findPatch() throws ApiError {
+        ResponseEntity<String> result;
+        String[] arrayVersion;
+
+        try {
+            result = restClient.sendReceive(null, "api/versions.json", RequestApiEnum.CHAMPION, ResponseEntity.class);
+
+            arrayVersion = objectMapper.readValue(result.getBody(), String[].class);
+        } catch (ApiError ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new ApiError(RiotgamesClient.class, "findPatch", "Error to set a last version", ex.getLocalizedMessage());
+        }
+
+        version = arrayVersion[0];
+    }
+
     @Autowired
     public void setGson(Gson gson) {
         UtilsWS.gson = gson;
+    }
+
+    @Autowired
+    public void setRestClient(RESTClient restClient) {
+        UtilsWS.restClient = restClient;
+    }
+
+    @Autowired
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        UtilsWS.objectMapper = objectMapper;
     }
 }

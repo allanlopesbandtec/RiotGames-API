@@ -71,7 +71,10 @@ public class RESTClient {
 
         try {
             headers.add("X-Riot-Token", "RGAPI-cb94d455-4999-4841-8c6e-a511eaa99671");
-//            headers.add("Content-Encoding", "gzip");
+            headers.add("Content-Encoding", "gzip, deflate, br");
+            headers.add("Content-Type", "application/json;charset=utf-8");
+            headers.add("Accept-Language","en-US,en;q=0.9,pt-BR;q=0.8,pt;q=0.7");
+            headers.add("Accept-Charset", "application/x-www-form-urlencoded; charset=UTF-8");
         } catch (Exception ex) {
             throw new ApiError(
                     RESTClient.class,

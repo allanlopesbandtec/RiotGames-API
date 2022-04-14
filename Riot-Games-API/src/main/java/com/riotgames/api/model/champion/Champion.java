@@ -1,6 +1,7 @@
 package com.riotgames.api.model.champion;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 public class Champion {
 
+    @JsonIgnore
     //Map que vai servir para construir cada instancia de campeão
     //E mapear com sua própria chave
     public Map<String, Champion> championMap = new HashMap<>();
