@@ -26,8 +26,10 @@ public class ChampionController {
             UtilsWS.findPatch();
             response = new ResponseEntity<>("New version loaded", HttpStatus.OK);
         } catch (ApiError ex) {
+            ex.printStackTrace();
             response = new ResponseEntity<>(ex, ex.getHttpStatus());
         } catch (Exception ex) {
+            ex.printStackTrace();
             response = new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
