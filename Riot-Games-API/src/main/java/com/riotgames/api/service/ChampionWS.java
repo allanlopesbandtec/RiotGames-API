@@ -101,12 +101,7 @@ public class ChampionWS {
         List<ChampionDto> championDto = getCampeaoDtos();
 
         //Lista que vamos retornar Api
-        List<ChampionMasteryDto> championsMasteryDto = new ArrayList<>();
-
-        //Organiza champMaestria x champs
-        championsMasteryDto = getChampionMasteryDto(championsByMasteries, championDto);
-
-        return championsMasteryDto;
+        return getChampionMasteryDto(championsByMasteries, championDto);
     }
 
     public List<ChampionDto> getCampeaoDtos() throws ApiError {
@@ -141,7 +136,7 @@ public class ChampionWS {
         }
     }
 
-    public List<ChampionMasteryDto> getCustomSearchChampions(String nick, String role) throws ApiError {
+    public List<ChampionMasteryDto> getFilterSearchChampions(String nick, String role) throws ApiError {
         List<ChampionMasteryDto> masteryDtos = getChampionsByMastery(nick);
         List<ChampionMasteryDto> filterMasteryList = new ArrayList<>();
 
@@ -158,6 +153,11 @@ public class ChampionWS {
             }
         } catch (Exception ex) {
             throw new ApiError(ChampionWS.class, "getCustomSearchChampions", "Error to filter champs by role", ex.getLocalizedMessage());
+        }
+
+        //Ajustar validação
+        if (filterMasteryList.isEmpty()) {
+            throw new ApiError(ChampionWS.class, "getFilterSearchChampions", "Mastery list is empty, check de lane name", HttpStatus.BAD_REQUEST);
         }
 
         return filterMasteryList;

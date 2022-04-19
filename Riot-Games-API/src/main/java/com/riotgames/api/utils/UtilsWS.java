@@ -100,7 +100,6 @@ public class UtilsWS {
 
         try {
             result = restClient.sendReceive(null, "api/versions.json", RequestApiEnum.CHAMPION, ResponseEntity.class);
-
             arrayVersion = objectMapper.readValue(result.getBody(), String[].class);
         } catch (ApiError ex) {
             throw ex;

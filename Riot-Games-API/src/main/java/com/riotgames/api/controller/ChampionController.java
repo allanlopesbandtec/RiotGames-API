@@ -25,6 +25,7 @@ public class ChampionController {
         try {
             UtilsWS.findPatch();
             response = new ResponseEntity<>("New version loaded", HttpStatus.OK);
+            System.out.println("New version loaded " + HttpStatus.OK);
         } catch (ApiError ex) {
             ex.printStackTrace();
             response = new ResponseEntity<>(ex, ex.getHttpStatus());
@@ -68,7 +69,7 @@ public class ChampionController {
         ResponseEntity<Object> response = null;
 
         try {
-            response = new ResponseEntity<>(championWS.getCustomSearchChampions(nick, lane), HttpStatus.OK);
+            response = new ResponseEntity<>(championWS.getFilterSearchChampions(nick, lane), HttpStatus.OK);
         } catch (ApiError ex) {
             response = new ResponseEntity<>(ex, ex.getHttpStatus());
         }
