@@ -15,7 +15,7 @@ public class MatchRequest {
     private Integer count;
 
     public MatchRequest(Long startTime, Long endTime, Integer queue, String type, Integer start, Integer count) {
-        this.startTime = startTime ;
+        this.startTime = startTime;
         this.endTime = endTime;
         this.queue = queue;
         this.type = type;

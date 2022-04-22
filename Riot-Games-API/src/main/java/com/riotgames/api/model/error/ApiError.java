@@ -1,6 +1,6 @@
 package com.riotgames.api.model.error;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.http.HttpStatus;
 
 //Classe de erros do projeto
@@ -27,16 +27,14 @@ public class ApiError extends Exception {
     private String searchUrl;
 
 
-
-
     /**
-     * @apiNote Construtor para erros em request, usado no sendReceive
      * @param clazz
      * @param method
      * @param description
      * @param apiError
      * @param httpStatus
      * @param searchUrl
+     * @apiNote Construtor para erros em request, usado no sendReceive
      */
     public ApiError(Class clazz, String method, String description, Object apiError, HttpStatus httpStatus, String searchUrl) {
         this.clazz = clazz;
@@ -49,11 +47,11 @@ public class ApiError extends Exception {
 
 
     /**
-     * @apiNote Validações, não necessáriamente vai resultar em erro
      * @param clazz
      * @param method
      * @param description
      * @param httpStatus
+     * @apiNote Validações, não necessáriamente vai resultar em erro
      */
     public ApiError(Class clazz, String method, String description, HttpStatus httpStatus) {
         this.clazz = clazz;
@@ -65,11 +63,11 @@ public class ApiError extends Exception {
 
 
     /**
-     * @apiNote Construtor para erros genéricos nas classes
      * @param clazz
      * @param method
      * @param description
      * @param bodyErrorRequest
+     * @apiNote Construtor para erros genéricos nas classes
      */
     public ApiError(Class clazz, String method, String description, Object bodyErrorRequest) {
         this.clazz = clazz;
