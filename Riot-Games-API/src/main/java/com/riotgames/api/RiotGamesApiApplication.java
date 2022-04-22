@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 public class RiotGamesApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RiotGamesApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(RiotGamesApiApplication.class, args);
+    }
 
 }

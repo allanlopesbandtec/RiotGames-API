@@ -21,17 +21,16 @@ public class SummonerWS {
     public Summoner findSummoner(String nick) throws ApiError {
         Summoner summoner = null;
 
-        if (nick == null) {
-            throw new ApiError(SummonerWS.class, "findSummoner", "");
+        if (nick == null || nick.isBlank() || nick.isEmpty()) {
+            throw new ApiError(ChampionWS.class, "findSummoner", "Nickname is empty or blank", HttpStatus.BAD_REQUEST);
         }
-
 
         try {
             summoner = gson.fromJson(riotgamesClient.findSummonerByNick(nick).getBody(), Summoner.class);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new ApiError(SummonerWS.class, "findSummoner", "Erro ao buscar invocador", ex);
+            throw new ApiError(SummonerWS.class, "findSummoner", "Erro ao buscar invocador", ex.getLocalizedMessage());
         }
 
         return summoner;

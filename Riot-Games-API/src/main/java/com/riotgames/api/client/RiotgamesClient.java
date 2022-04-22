@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.riotgames.api.model.enumerator.RequestApiEnum;
 import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.model.match.MatchRequest;
-import com.riotgames.api.utils.UtilsWS;
+import com.riotgames.api.service.StaticWS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class RiotgamesClient {
         ResponseEntity<String> result;
 
         //Linguagem de retorno pt_BR
-        String uri = String.format("/cdn/%s/data/pt_BR/champion.json", UtilsWS.version);
+        String uri = String.format("/cdn/%s/data/pt_BR/champion.json", StaticWS.version);
 
         try {
             result = restClient.sendReceive(null, uri, RequestApiEnum.DDRAGON, ResponseEntity.class);
@@ -40,8 +40,7 @@ public class RiotgamesClient {
     public String findChampion(String championName) throws ApiError {
         ResponseEntity<String> result;
 
-        String uri = String.format("", UtilsWS.version, championName);
-
+        String uri = String.format("/cdn/%s/data/pt_BR/champion/%s.json", StaticWS.version, championName);
 
         try {
             result = restClient.sendReceive(null, uri, RequestApiEnum.DDRAGON, ResponseEntity.class);

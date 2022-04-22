@@ -1,9 +1,9 @@
 package com.riotgames.api.client;
 
 import com.google.gson.Gson;
-import com.riotgames.api.utils.UtilsWS;
-import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.model.enumerator.RequestApiEnum;
+import com.riotgames.api.model.error.ApiError;
+import com.riotgames.api.utils.UtilsWS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -40,8 +40,8 @@ public class RESTClient {
             //Criação de um responseEntity para enviar o Erro
             ResponseEntity<Object> responseException;
 
-            if (ex instanceof HttpStatusCodeException){
-               //Caso o erro for dessa instancia vai criar o objeto tratado com status
+            if (ex instanceof HttpStatusCodeException) {
+                //Caso o erro for dessa instancia vai criar o objeto tratado com status
                 HttpStatusCodeException httpStatusError = (HttpStatusCodeException) ex;
                 responseException = new ResponseEntity<>(httpStatusError.getResponseBodyAsString(), httpStatusError.getStatusCode());
             } else {
@@ -54,7 +54,7 @@ public class RESTClient {
                     RESTClient.class,
                     "sendReceive",
                     "Error to send request to the RiotGames API",
-                    UtilsWS.returnErrors(responseException.getBody().toString(), requestApiEnum) ,
+                    UtilsWS.returnErrors(responseException.getBody().toString(), requestApiEnum),
                     responseException.getStatusCode(),
                     UtilsWS.buildUri(requestParams, requestApiEnum.getClientAmbiente(), uri)
             );

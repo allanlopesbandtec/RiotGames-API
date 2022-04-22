@@ -2,6 +2,7 @@ package com.riotgames.api.controller;
 
 import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.service.ChampionWS;
+import com.riotgames.api.service.StaticWS;
 import com.riotgames.api.utils.UtilsWS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,9 +24,9 @@ public class ChampionController {
         ResponseEntity<Object> response = null;
 
         try {
-            UtilsWS.findPatch();
-            response = new ResponseEntity<>("New version loaded", HttpStatus.OK);
-            System.out.println("New version loaded " + HttpStatus.OK);
+            StaticWS.findPatch();
+            response = new ResponseEntity<>(StaticWS.version, HttpStatus.OK);
+            System.out.println("New version loaded, HttpStatus: " + HttpStatus.OK);
         } catch (ApiError ex) {
             ex.printStackTrace();
             response = new ResponseEntity<>(ex, ex.getHttpStatus());
@@ -37,21 +38,47 @@ public class ChampionController {
         return response;
     }
 
+    @GetMapping("/load-championsList")
+    public ResponseEntity<Object> loadAllChampions() {
+        ResponseEntity<Object> response = null;
+
+        try {
+            StaticWS.findChampionsList();
+            response = new ResponseEntity<>(StaticWS.championsList, StaticWS.championsList.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
+            System.out.println("Champion list filled, HttpStatus: " + HttpStatus.OK);
+        } catch (ApiError ex) {
+            ex.printStackTrace();
+            response = new ResponseEntity<>(ex, ex.getHttpStatus());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            response = new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return response;
+    }
+
     @GetMapping
     public ResponseEntity<Object> allChampions() {
         ResponseEntity<Object> response = null;
 
         try {
-            response = new ResponseEntity<>(championWS.getChampionsList(), HttpStatus.OK);
+
+            if (StaticWS.championsList.isEmpty()) {
+                StaticWS.findChampionsList();
+            } else {
+                response = new ResponseEntity<>(StaticWS.championsList, HttpStatus.OK);
+            }
+
         } catch (ApiError ex) {
             response = new ResponseEntity<>(ex, ex.getHttpStatus());
+        } catch (Exception ex) {
+            response = new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return response;
     }
 
-    @GetMapping("/{championName}")
-    public ResponseEntity<Object> getOneChampion(@PathVariable String championName){
+    @GetMapping("/find-champion/{championName}")
+    public ResponseEntity<Object> getOneChampion(@PathVariable String championName) {
         ResponseEntity<Object> response;
 
         try {
@@ -64,7 +91,7 @@ public class ChampionController {
 
     }
 
-    @GetMapping("/{nick}")
+    @GetMapping("/champions/{nick}")
     public ResponseEntity<Object> allChampionsByMastery(@PathVariable String nick) {
         ResponseEntity<Object> response = null;
 
