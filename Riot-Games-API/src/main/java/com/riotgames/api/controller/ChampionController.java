@@ -50,6 +50,20 @@ public class ChampionController {
         return response;
     }
 
+    @GetMapping("/{championName}")
+    public ResponseEntity<Object> getOneChampion(@PathVariable String championName){
+        ResponseEntity<Object> response;
+
+        try {
+            response = new ResponseEntity<>(championWS.getChampDetail(championName), HttpStatus.OK);
+        } catch (ApiError ex) {
+            response = new ResponseEntity<>(ex, ex.getHttpStatus());
+        }
+
+        return response;
+
+    }
+
     @GetMapping("/{nick}")
     public ResponseEntity<Object> allChampionsByMastery(@PathVariable String nick) {
         ResponseEntity<Object> response = null;

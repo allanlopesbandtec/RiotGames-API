@@ -27,7 +27,17 @@ public class ApiError extends Exception {
     private String searchUrl;
 
 
-    //Construtor para erros em request, usado no sendReceive
+
+
+    /**
+     * @apiNote Construtor para erros em request, usado no sendReceive
+     * @param clazz
+     * @param method
+     * @param description
+     * @param apiError
+     * @param httpStatus
+     * @param searchUrl
+     */
     public ApiError(Class clazz, String method, String description, Object apiError, HttpStatus httpStatus, String searchUrl) {
         this.clazz = clazz;
         this.method = method;
@@ -38,7 +48,13 @@ public class ApiError extends Exception {
     }
 
 
-    //Validações, não necessáriamente vai resultar em erro
+    /**
+     * @apiNote Validações, não necessáriamente vai resultar em erro
+     * @param clazz
+     * @param method
+     * @param description
+     * @param httpStatus
+     */
     public ApiError(Class clazz, String method, String description, HttpStatus httpStatus) {
         this.clazz = clazz;
         this.method = method;
@@ -47,7 +63,14 @@ public class ApiError extends Exception {
         this.searchUrl = "";
     }
 
-    //Construtor para erros genéricos nas classes
+
+    /**
+     * @apiNote Construtor para erros genéricos nas classes
+     * @param clazz
+     * @param method
+     * @param description
+     * @param bodyErrorRequest
+     */
     public ApiError(Class clazz, String method, String description, Object bodyErrorRequest) {
         this.clazz = clazz;
         this.method = method;

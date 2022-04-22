@@ -27,7 +27,7 @@ public class RiotgamesClient {
         String uri = String.format("/cdn/%s/data/pt_BR/champion.json", UtilsWS.version);
 
         try {
-            result = restClient.sendReceive(null, uri, RequestApiEnum.CHAMPION, ResponseEntity.class);
+            result = restClient.sendReceive(null, uri, RequestApiEnum.DDRAGON, ResponseEntity.class);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
@@ -35,6 +35,24 @@ public class RiotgamesClient {
         }
 
         return result.getBody();
+    }
+
+    public String findChampion(String championName) throws ApiError {
+        ResponseEntity<String> result;
+
+        String uri = String.format("", UtilsWS.version, championName);
+
+
+        try {
+            result = restClient.sendReceive(null, uri, RequestApiEnum.DDRAGON, ResponseEntity.class);
+        } catch (ApiError ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new ApiError(RiotgamesClient.class, "findChampion", "Falha ao efetuar request", ex.getLocalizedMessage());
+        }
+
+        return result.getBody();
+
     }
 
     public ResponseEntity<String> findSummonerByNick(String nickName) throws ApiError {

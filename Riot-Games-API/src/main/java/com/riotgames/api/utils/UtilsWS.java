@@ -99,7 +99,7 @@ public class UtilsWS {
         String[] arrayVersion;
 
         try {
-            result = restClient.sendReceive(null, "api/versions.json", RequestApiEnum.CHAMPION, ResponseEntity.class);
+            result = restClient.sendReceive(null, "api/versions.json", RequestApiEnum.DDRAGON, ResponseEntity.class);
             arrayVersion = objectMapper.readValue(result.getBody(), String[].class);
         } catch (ApiError ex) {
             throw ex;

@@ -21,12 +21,17 @@ public class SummonerWS {
     public Summoner findSummoner(String nick) throws ApiError {
         Summoner summoner = null;
 
+        if (nick == null) {
+            throw new ApiError(SummonerWS.class, "findSummoner", "");
+        }
+
+
         try {
             summoner = gson.fromJson(riotgamesClient.findSummonerByNick(nick).getBody(), Summoner.class);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new ApiError(SummonerWS.class, "findSummoner", "Erro ao buscar invocador", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiError(SummonerWS.class, "findSummoner", "Erro ao buscar invocador", ex);
         }
 
         return summoner;

@@ -164,4 +164,8 @@ public class ChampionWS {
     }
 
 
+    public ChampionDetailResponse getChampDetail(String championName) {
+
+
+    }
 }
