@@ -165,5 +165,14 @@ public class ChampionWS {
         return filterMasteryList;
     }
 
+    public String listChampionsMostPlayed() throws ApiError {
+        String request = riotgamesClient.getChampionsMostPlayed();
+
+        JSONObject jsonObject = new JSONObject(request);
+
+        return request;
+    }
+
+
 
 }

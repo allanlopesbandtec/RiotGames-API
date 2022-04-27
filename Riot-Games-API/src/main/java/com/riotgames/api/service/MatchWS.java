@@ -53,7 +53,6 @@ public class MatchWS {
     }
 
     public Match getMatch(String matchId) throws ApiError {
-        MatchRequest matchRequest = null;
         Match match;
         String todos;
 

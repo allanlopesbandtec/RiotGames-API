@@ -131,7 +131,7 @@ public class RiotgamesClient {
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
-            throw new ApiError(RiotgamesClient.class, "findLastMatch", "Falha ao efetuar request", ex.getLocalizedMessage());
+            throw new ApiError(RiotgamesClient.class, "getChampionsMostPlayed", "Falha ao efetuar request", ex.getLocalizedMessage());
         }
 
         return result.getBody();
