@@ -107,7 +107,7 @@ public class RiotgamesClient {
     public String findLastMatch(String matchId) throws ApiError {
         ResponseEntity<String> result;
 
-        String uri = "/lol/match/v5/matches/" + matchId;
+        String uri = String.format("/lol/match/v5/matches/%s",matchId);
 
         try {
             result = restClient.sendReceive(null, uri, RequestApiEnum.AMERICAS, ResponseEntity.class);
@@ -119,4 +119,23 @@ public class RiotgamesClient {
 
         return result.getBody();
     }
+
+
+    public String getChampionsMostPlayed() throws ApiError {
+        ResponseEntity<String> result;
+
+        String uri = "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-champion-statistics/global/default/rcp-fe-lol-champion-statistics.js";
+
+        try {
+            result = restClient.sendReceive(null, uri, null, ResponseEntity.class);
+        } catch (ApiError ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new ApiError(RiotgamesClient.class, "findLastMatch", "Falha ao efetuar request", ex.getLocalizedMessage());
+        }
+
+        return result.getBody();
+    }
+
+
 }

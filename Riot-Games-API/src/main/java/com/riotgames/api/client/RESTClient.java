@@ -22,17 +22,35 @@ public class RESTClient {
     private Gson gson;
 
     //Método que vai enviar requisições para as APIs
+
+    /**
+     *
+     * @param requestParams @null
+     * @param uri
+     * @param requestApiEnum @null
+     * @param retorno @null
+     * @return ResponseEntity
+     * @throws ApiError
+     */
+
     public ResponseEntity<String> sendReceive(Map<String, String> requestParams, String uri, RequestApiEnum requestApiEnum, Class retorno) throws ApiError {
-        //Resposta e request
+        //Resposta, request, endpoint
         ResponseEntity<String> responseEntity;
         HttpEntity<String> entity = new HttpEntity<>(getHeaders());
+        String endpoint = "";
 
         try {
             //Montando requisição baseada na API desejada
             //Uri passada com base no método
             //Headers para request
+
+            endpoint = UtilsWS.buildUri(
+                    requestParams,
+                    requestApiEnum != null ? requestApiEnum.getClientAmbiente() : "",
+                    uri);
+
             responseEntity = restTemplate.exchange(
-                    UtilsWS.buildUri(requestParams, requestApiEnum.getClientAmbiente(), uri),
+                    endpoint,
                     HttpMethod.GET,
                     entity,
                     String.class);
@@ -56,7 +74,7 @@ public class RESTClient {
                     "Error to send request to the RiotGames API",
                     UtilsWS.returnErrors(responseException.getBody().toString(), requestApiEnum),
                     responseException.getStatusCode(),
-                    UtilsWS.buildUri(requestParams, requestApiEnum.getClientAmbiente(), uri)
+                    endpoint
             );
         }
 
@@ -68,7 +86,7 @@ public class RESTClient {
         HttpHeaders headers = new HttpHeaders();
 
         try {
-            headers.add("X-Riot-Token", "RGAPI-6e654f3f-50d9-40be-acbb-08a4e6e03da2");
+            headers.add("X-Riot-Token", "RGAPI-52af9f72-3203-4089-99f0-542312bdf5cf");
             headers.add(HttpHeaders.ACCEPT, "application/json");
             headers.add("Content-Encoding", "gzip, deflate, br");
 //            headers.add("Content-Type", "application/json;charset=utf-8");

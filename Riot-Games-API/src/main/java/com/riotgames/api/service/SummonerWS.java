@@ -1,5 +1,6 @@
 package com.riotgames.api.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.riotgames.api.client.RiotgamesClient;
 import com.riotgames.api.model.Summoner;
@@ -16,7 +17,7 @@ public class SummonerWS {
     private RiotgamesClient riotgamesClient;
 
     @Autowired
-    private Gson gson;
+    private ObjectMapper objectMapper;
 
     public Summoner findSummoner(String nick) throws ApiError {
         Summoner summoner = null;
@@ -26,7 +27,7 @@ public class SummonerWS {
         }
 
         try {
-            summoner = gson.fromJson(riotgamesClient.findSummonerByNick(nick).getBody(), Summoner.class);
+            summoner = objectMapper.readValue(riotgamesClient.findSummonerByNick(nick).getBody(), Summoner.class);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {

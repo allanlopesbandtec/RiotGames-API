@@ -35,7 +35,8 @@ public class ChampionWS {
         String request = "";
 
         try {
-            /** @apiNote Requisição com campeões da página web -> {@link {http://ddragon.leagueoflegends.com/cdn/12.5.1/data/pt_BR/champion.json}}
+            /** @apiNote Requisição com campeões da página web ->
+             *                          {@link {http://ddragon.leagueoflegends.com/cdn/12.5.1/data/pt_BR/champion.json}}
              */
             request = riotgamesClient.findChampions();
             //Mapeamento da resposta, dentro da chave "data" com o JSONObject vamos encontrar os campeões
