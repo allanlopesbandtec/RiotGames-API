@@ -1,66 +1,31 @@
 package com.riotgames.api.model;
 
-import com.riotgames.api.model.match.Team;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.riotgames.api.model.match.InfoMatch;
+import com.riotgames.api.model.match.MetaData;
 
 public class Match {
 
-    private String matchId;
+    @JsonProperty("metadata")
+    private MetaData metaData;
 
-    private List<String> participants;
+    @JsonProperty("info")
+    private InfoMatch infoMatch;
 
-    private String platformId;
-
-    private Integer queueId;
-
-    private List<Team> teams;
-
-    public Match(String matchId, List<String> participants, String platformId, Integer queueId, List<Team> teams) {
-        this.matchId = matchId;
-        this.participants = participants;
-        this.platformId = platformId;
-        this.queueId = queueId;
-        this.teams = teams;
+    public MetaData getMetaData() {
+        return metaData;
     }
 
-    public String getMatchId() {
-        return matchId;
+    public void setMetaData(MetaData metaData) {
+        this.metaData = metaData;
     }
 
-    public void setMatchId(String matchId) {
-        this.matchId = matchId;
+    public InfoMatch getInfoMatch() {
+        return infoMatch;
     }
 
-    public List<String> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(List<String> participants) {
-        this.participants = participants;
-    }
-
-    public String getPlatformId() {
-        return platformId;
-    }
-
-    public void setPlatformId(String platformId) {
-        this.platformId = platformId;
-    }
-
-    public Integer getQueueId() {
-        return queueId;
-    }
-
-    public void setQueueId(Integer queueId) {
-        this.queueId = queueId;
-    }
-
-    public List<Team> getTeams() {
-        return teams;
-    }
-
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
+    public void setInfoMatch(InfoMatch infoMatch) {
+        this.infoMatch = infoMatch;
     }
 }

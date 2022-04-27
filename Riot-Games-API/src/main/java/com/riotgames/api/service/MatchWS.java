@@ -2,6 +2,7 @@ package com.riotgames.api.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.riotgames.api.client.RiotgamesClient;
+import com.riotgames.api.model.Match;
 import com.riotgames.api.model.Summoner;
 import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.model.match.MatchRequest;
@@ -51,19 +52,21 @@ public class MatchWS {
         }
     }
 
-    public String getLastMatch(String nick) throws ApiError {
+    public Match getMatch(String matchId) throws ApiError {
         MatchRequest matchRequest = null;
+        Match match;
+        String todos;
 
-        List<String> listaPartidas = getMatchId(nick, null);
-//        System.out.println("Última partida encontrada -" + listaPartidas.get(0));
+        try {
+            todos =  riotgamesClient.findLastMatch(matchId);
+            match = objectMapper.readValue(todos, Match.class);
+        } catch (ApiError ex) {
+            throw ex;
+        } catch (Exception ex){
+            throw new ApiError(MatchWS.class, "getMatch", "Error to create match", ex.getLocalizedMessage());
+        }
 
-        String todos = riotgamesClient.findLastMatch(listaPartidas.get(0));
-
-        JSONObject campeoes = new JSONObject(todos);
-
-        JSONObject chave = campeoes.getJSONObject("metadata");
-
-        return chave.toString();
+        return match;
     }
 
 }

@@ -37,13 +37,13 @@ public class MatchController {
         return response;
     }
 
-    @GetMapping("/matchId/{nick}")
-    public ResponseEntity<Object> getMatch(@PathVariable String nick) {
+    @GetMapping("/matchId/{matchId}")
+    public ResponseEntity<Object> oneMatch(@PathVariable String matchId) {
 
         ResponseEntity<Object> response;
 
         try {
-            response = new ResponseEntity<>(matchWS.getLastMatch(nick), HttpStatus.OK);
+            response = new ResponseEntity<>(matchWS.getMatch(matchId), HttpStatus.OK);
         } catch (ApiError ex) {
             response = new ResponseEntity<>(ex, ex.getHttpStatus());
         }
