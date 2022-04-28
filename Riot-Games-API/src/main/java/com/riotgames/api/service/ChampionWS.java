@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -168,11 +171,15 @@ public class ChampionWS {
     public String listChampionsMostPlayed() throws ApiError {
         String request = riotgamesClient.getChampionsMostPlayed();
 
-        JSONObject jsonObject = new JSONObject(request);
+        try {
+            ScriptEngine se = new ScriptEngineManager().getEngineByName("js");
+            se.eval(String.format("Object.bindProperties(this, %s);", request));
+            se.eval("print(this.name.onClick)");
+        } catch (ScriptException e) {
+            e.printStackTrace();
+        }
+
 
         return request;
     }
-
-
-
 }
