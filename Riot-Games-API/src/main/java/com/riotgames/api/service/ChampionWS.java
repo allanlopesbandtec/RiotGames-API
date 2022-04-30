@@ -15,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -168,18 +165,32 @@ public class ChampionWS {
         return filterMasteryList;
     }
 
-    public String listChampionsMostPlayed() throws ApiError {
+    public Map<String, Double> listChampionsMostPlayed() throws ApiError {
         String request = riotgamesClient.getChampionsMostPlayed();
 
+        Map<String, Double> championsMap = new HashMap<>();
+        List<String> lanes = List.of(new String[]{"SUPPORT", "MIDDLE", "TOP", "BOTTOM", "JUNGLE"});
+
         try {
-            ScriptEngine se = new ScriptEngineManager().getEngineByName("js");
-            se.eval(String.format("Object.bindProperties(this, %s);", request));
-            se.eval("print(this.name.onClick)");
-        } catch (ScriptException e) {
+
+            for (String lane : lanes) {
+
+                Map<String, Double> auxMap = objectMapper.readValue("", HashMap.class);
+
+                if (auxMap.size() > 0) {
+                    for (Map.Entry<String, Double> champion : auxMap.entrySet()) {
+                        championsMap.put(champion.getKey(), champion.getValue());
+                        auxMap.remove(champion.getKey());
+                    }
+                }
+            }
+
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-        return request;
+        return championsMap;
     }
 }
