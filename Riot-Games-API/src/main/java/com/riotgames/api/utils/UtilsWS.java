@@ -8,6 +8,7 @@ import com.riotgames.api.model.enumerator.RequestApiEnum;
 import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.model.error.ErrorJsonApi;
 import com.riotgames.api.model.error.ErrorXmlApi;
+import org.apache.tomcat.jni.Directory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -89,14 +90,11 @@ public class UtilsWS {
 
     public static void saveRequest(String key, String title) throws ApiError {
 
-
         try {
-            boolean fileExists;
+            File file = new File("src/main/resources/");
 
-            File file = new File("src/main/resources/" + "test.txt");
-            fileExists = file.exists();
 
-            if (fileExists) {
+            if (file.exists()) {
                 //Lê
                 FileReader fileReader = new FileReader(file);
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -121,6 +119,7 @@ public class UtilsWS {
                 bufferedReader.close();
                 fileReader.close();
             } else {
+                file.mkdir();
                 file.createNewFile();
                 saveRequest(key, title);
             }

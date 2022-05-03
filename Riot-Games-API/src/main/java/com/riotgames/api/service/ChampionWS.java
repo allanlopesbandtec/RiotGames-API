@@ -165,32 +165,72 @@ public class ChampionWS {
         return filterMasteryList;
     }
 
-    public Map<String, Double> listChampionsMostPlayed() throws ApiError {
+    public Map<String, String> listChampionsMostPlayed() throws ApiError {
         String request = riotgamesClient.getChampionsMostPlayed();
 
-        Map<String, Double> championsMap = new HashMap<>();
+
+        String laneData = request.split("a.exports=")[1];
+        laneData = laneData.replace("},function(){}]);", "");
+
+        Map<String, String> championsMap = new HashMap<>();
         List<String> lanes = List.of(new String[]{"SUPPORT", "MIDDLE", "TOP", "BOTTOM", "JUNGLE"});
+
+        JSONObject jsonObject = new JSONObject(laneData);
 
         try {
 
             for (String lane : lanes) {
 
-                Map<String, Double> auxMap = objectMapper.readValue("", HashMap.class);
+                Map<String, String> auxMap = objectMapper.readValue(jsonObject.get(lane).toString(), HashMap.class);
 
-                if (auxMap.size() > 0) {
-                    for (Map.Entry<String, Double> champion : auxMap.entrySet()) {
-                        championsMap.put(champion.getKey(), champion.getValue());
-                        auxMap.remove(champion.getKey());
-                    }
+
+                for (Map.Entry<String, String> champion : auxMap.entrySet()) {
+                    championsMap.put(champion.getKey(), (champion.getValue()));
                 }
+
+                auxMap.clear();
             }
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            throw new ApiError(ChampionWS.class, "listChampionsMostPlayed", "Error to map", ex.getLocalizedMessage());
         }
 
 
         return championsMap;
     }
+
+    public Map<String, Double> listChampions(String lane) throws ApiError {
+        String request = riotgamesClient.getChampionsMostPlayed();
+
+
+        String laneData = request.split("a.exports=")[1];
+        laneData = laneData.replace("},function(){}]);", "");
+
+        Map<String, Double> championsMap = new HashMap<>();
+
+        JSONObject jsonObject = new JSONObject(laneData);
+
+        try {
+
+
+            Map<String, String> auxMap = objectMapper.readValue(jsonObject.get(lane).toString(), HashMap.class);
+
+
+            for (Map.Entry<String, String> champion : auxMap.entrySet()) {
+                championsMap.put(champion.getKey(), Double.parseDouble(champion.getValue()));
+            }
+
+            auxMap.clear();
+
+
+        } catch (Exception ex) {
+            throw new ApiError(ChampionWS.class, "listChampionsMostPlayed", "Error to map", ex.getLocalizedMessage());
+        }
+
+
+        return championsMap;
+    }
+
+
 }
