@@ -16,7 +16,7 @@ public class ChampionMasteryDto {
 
     private Boolean chestWinned;
 
-    private List<String> tags;
+    private Double pickRate;
 
     public ChampionMasteryDto(ChampionByMastery championByMastery, ChampionDto champion) {
         this.key = championByMastery.getChampionId();
@@ -24,7 +24,7 @@ public class ChampionMasteryDto {
         this.masteryPoints = championByMastery.getChampionPoints();
         this.masteryLevel = championByMastery.getChampionLevel();
         this.chestWinned = championByMastery.getChestGranted();
-        this.tags = champion.getTags();
+        this.pickRate = 0.0;
     }
 
     public Long getKey() {
@@ -67,11 +67,11 @@ public class ChampionMasteryDto {
         this.chestWinned = chestWinned;
     }
 
-    public List<String> getTags() {
-        return tags;
+    public Double getPickRate() {
+        return pickRate;
     }
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
+    public void setPickRate(Double pickRate) {
+        this.pickRate = pickRate;
     }
 }

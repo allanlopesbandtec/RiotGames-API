@@ -106,7 +106,7 @@ public class ChampionController {
 
     @GetMapping("/by-lane/{nick}")
     public ResponseEntity<Object> allChampionsByMastery(@PathVariable String nick,
-                                                        @RequestParam(name = "lane", required = false) String lane) {
+                                                        @RequestParam(name = "lane") String lane) {
         ResponseEntity<Object> response = null;
 
         try {
@@ -117,19 +117,4 @@ public class ChampionController {
 
         return response;
     }
-
-    @GetMapping("/most-played")
-    public ResponseEntity<Object> mostPlayedChampions(){
-
-        ResponseEntity<Object> response = null;
-
-        try {
-            response = new ResponseEntity<>(championWS.listChampionsMostPlayed(), HttpStatus.OK);
-        } catch (ApiError ex) {
-            response = new ResponseEntity<>(ex, ex.getHttpStatus());
-        }
-
-        return response;
-    }
-
 }

@@ -138,23 +138,21 @@ public class ChampionWS {
         }
     }
 
-    public List<ChampionMasteryDto> getFilterSearchChampions(String nick, String role) throws ApiError {
-        List<ChampionMasteryDto> masteryDtos = getChampionsByMastery(nick);
+    public List<ChampionMasteryDto> getFilterSearchChampions(String nick, String lane) throws ApiError {
+        List<ChampionMasteryDto> masteryDtos = listChampionsMostPlayed(nick, lane);
         List<ChampionMasteryDto> filterMasteryList = new ArrayList<>();
 
         try {
 
             for (ChampionMasteryDto championMasteryDto : masteryDtos) {
 
-                for (String tags : championMasteryDto.getTags()) {
-
-                    if (!championMasteryDto.getChestWinned() && tags.equals(role)) {
-                        filterMasteryList.add(championMasteryDto);
-                    }
+                if (!championMasteryDto.getChestWinned()) {
+                    filterMasteryList.add(championMasteryDto);
                 }
+
             }
         } catch (Exception ex) {
-            throw new ApiError(ChampionWS.class, "getCustomSearchChampions", "Error to filter champs by role", ex.getLocalizedMessage());
+            throw new ApiError(ChampionWS.class, "getCustomSearchChampions", "Error to filter champs by lane", ex.getLocalizedMessage());
         }
 
         //Ajustar validação
@@ -165,46 +163,17 @@ public class ChampionWS {
         return filterMasteryList;
     }
 
-    public Map<String, String> listChampionsMostPlayed() throws ApiError {
+
+    /**
+     * @param lane lane escolhida pelo jogador
+     * @return {@link List<ChampionDto>}
+     * @throws ApiError classe de exceção RiotGamesClient
+     */
+    public Map<String, Double> mapChampionsMostPlayed(String lane) throws ApiError {
         String request = riotgamesClient.getChampionsMostPlayed();
 
-
         String laneData = request.split("a.exports=")[1];
-        laneData = laneData.replace("},function(){}]);", "");
 
-        Map<String, String> championsMap = new HashMap<>();
-        List<String> lanes = List.of(new String[]{"SUPPORT", "MIDDLE", "TOP", "BOTTOM", "JUNGLE"});
-
-        JSONObject jsonObject = new JSONObject(laneData);
-
-        try {
-
-            for (String lane : lanes) {
-
-                Map<String, String> auxMap = objectMapper.readValue(jsonObject.get(lane).toString(), HashMap.class);
-
-
-                for (Map.Entry<String, String> champion : auxMap.entrySet()) {
-                    championsMap.put(champion.getKey(), (champion.getValue()));
-                }
-
-                auxMap.clear();
-            }
-
-
-        } catch (Exception ex) {
-            throw new ApiError(ChampionWS.class, "listChampionsMostPlayed", "Error to map", ex.getLocalizedMessage());
-        }
-
-
-        return championsMap;
-    }
-
-    public Map<String, Double> listChampions(String lane) throws ApiError {
-        String request = riotgamesClient.getChampionsMostPlayed();
-
-
-        String laneData = request.split("a.exports=")[1];
         laneData = laneData.replace("},function(){}]);", "");
 
         Map<String, Double> championsMap = new HashMap<>();
@@ -212,25 +181,42 @@ public class ChampionWS {
         JSONObject jsonObject = new JSONObject(laneData);
 
         try {
-
-
             Map<String, String> auxMap = objectMapper.readValue(jsonObject.get(lane).toString(), HashMap.class);
-
 
             for (Map.Entry<String, String> champion : auxMap.entrySet()) {
                 championsMap.put(champion.getKey(), Double.parseDouble(champion.getValue()));
             }
 
             auxMap.clear();
-
-
         } catch (Exception ex) {
-            throw new ApiError(ChampionWS.class, "listChampionsMostPlayed", "Error to map", ex.getLocalizedMessage());
+            throw new ApiError(ChampionWS.class, "mapChampionsMostPlayed", "Error to map champions by lane", ex.getLocalizedMessage());
         }
-
 
         return championsMap;
     }
 
+    public List<ChampionMasteryDto> listChampionsMostPlayed(String nick, String lane) throws ApiError {
+        List<ChampionMasteryDto> championMasteryDtoListAux = getChampionsByMastery(nick);
+        Map<String, Double> mapChampions = mapChampionsMostPlayed(lane);
+        List<ChampionMasteryDto> championMasteryDtoList = new ArrayList<>();
+
+        try {
+            for (Map.Entry<String, Double> map : mapChampions.entrySet()) {
+                for (ChampionMasteryDto championMastery : championMasteryDtoListAux) {
+                    if (championMastery.getKey().toString().equals(map.getKey())) {
+                        championMastery.setPickRate(map.getValue() * 1000);
+                        championMasteryDtoList.add(championMastery);
+                    }
+                }
+            }
+
+            championMasteryDtoListAux.clear();
+
+        } catch (Exception ex) {
+            throw new ApiError(ChampionWS.class, "listChampionsMostPlayed", "Error to list champions by lane", ex.getLocalizedMessage());
+        }
+
+        return championMasteryDtoList;
+    }
 
 }
