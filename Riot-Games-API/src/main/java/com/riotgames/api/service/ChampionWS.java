@@ -30,14 +30,16 @@ public class ChampionWS {
     @Autowired
     private SummonerWS summonerWS;
 
+    /**
+     * @return {@code Map<String, Champion>}
+     * @throws ApiError classe de exceção RiotGamesClient
+     * @apiNote Requisição com campeões da página web <a href="http://ddragon.leagueoflegends.com/cdn/12.5.1/data/pt_BR/champion.json">http://ddragon.leagueoflegends.com/cdn/12.5.1/data/pt_BR/champion.json</a>
+     */
     protected Map<String, Champion> mapChampions() throws ApiError {
         Map<String, Champion> mapChampions = new HashMap<>();
         String request = "";
 
         try {
-            /** @apiNote Requisição com campeões da página web ->
-             *                          {@link {http://ddragon.leagueoflegends.com/cdn/12.5.1/data/pt_BR/champion.json}}
-             */
             request = riotgamesClient.findChampions();
             //Mapeamento da resposta, dentro da chave "data" com o JSONObject vamos encontrar os campeões
             String campeoes = new JSONObject(request).getJSONObject("data").toString();
@@ -52,10 +54,16 @@ public class ChampionWS {
         return mapChampions;
     }
 
+
+    /**
+     * @param championName nome do campeão
+     * @return {@code ChampionDetail}
+     * @throws ApiError classe de exceção RiotGamesClient
+     * @apiNote Busca o campeão mais detalhado
+     */
     public ChampionDetail getChampDetail(String championName) throws ApiError {
         ChampionDetail championDetail = null;
         String request;
-
 
         if (championName == null || championName.isBlank() || championName.isEmpty()) {
             throw new ApiError(ChampionWS.class, "getChampDetail", "Champion name is empty or blank", HttpStatus.BAD_REQUEST);
@@ -76,6 +84,12 @@ public class ChampionWS {
         return championDetail;
     }
 
+    /**
+     * @param encryptedSummonerId summonerId retornado da riot api
+     * @return {@code List<ChampionByMastery>}
+     * @throws ApiError classe de exceção RiotGamesClient
+     * @apiNote Busca campeões por maestria
+     */
     protected List<ChampionByMastery> getMasteryBySummoner(String encryptedSummonerId) throws ApiError {
         ChampionByMastery[] championMastery;
         String request;
@@ -92,6 +106,12 @@ public class ChampionWS {
         return new ArrayList<>(Arrays.asList(championMastery));
     }
 
+    /**
+     * @param nick nick do invocador
+     * @return {@code List<ChampionMasteryDto>}
+     * @throws ApiError classe de exceção RiotGamesClient
+     * @apiNote Chamada e construção do fluxo de lista de campões por maestria
+     */
     public List<ChampionMasteryDto> getChampionsByMastery(String nick) throws ApiError {
         //Buscando invocador
         Summoner summoner = summonerWS.findSummoner(nick);
@@ -110,7 +130,13 @@ public class ChampionWS {
         return StaticWS.championsList.stream().map(ChampionDto::new).collect(Collectors.toList());
     }
 
-    //Match entre campeoes com e sem maestria
+    /**
+     * @param masteryList retorno da api riotgames
+     * @param dtoList     dto para parsear os dados
+     * @return {@code List<ChampionMasteryDto>}
+     * @throws ApiError classe de exceção RiotGamesClient
+     * @apiNote Match entre campeoes com e sem maestria
+     */
     public List<ChampionMasteryDto> getChampionMasteryDto(List<ChampionByMastery> masteryList, List<ChampionDto> dtoList) throws ApiError {
 
         List<ChampionMasteryDto> championsMasteryDtos = new ArrayList<>();
@@ -138,6 +164,13 @@ public class ChampionWS {
         }
     }
 
+    /**
+     *
+     * @param nick nick do invocador
+     * @param lane lane do jogador
+     * @return {@code List<ChampionMasteryDto>}
+     * @throws ApiError classe de exceção RiotGamesClient
+     */
     public List<ChampionMasteryDto> getFilterSearchChampions(String nick, String lane) throws ApiError {
         List<ChampionMasteryDto> masteryDtos = listChampionsMostPlayed(nick, lane);
         List<ChampionMasteryDto> filterMasteryList = new ArrayList<>();
@@ -165,8 +198,8 @@ public class ChampionWS {
 
 
     /**
-     * @param lane lane escolhida pelo jogador
-     * @return {@link List<ChampionDto>}
+     * @param lane escolhida pelo jogador
+     * @return {@code Map<String,Double>}
      * @throws ApiError classe de exceção RiotGamesClient
      */
     public Map<String, Double> mapChampionsMostPlayed(String lane) throws ApiError {
@@ -195,6 +228,12 @@ public class ChampionWS {
         return championsMap;
     }
 
+    /**
+     * @param nick do invocador
+     * @param lane lane escolhida pelo jogador
+     * @return {@code List<ChampionMasteryDto>}
+     * @throws ApiError classe de exceção RiotGamesClient
+     */
     public List<ChampionMasteryDto> listChampionsMostPlayed(String nick, String lane) throws ApiError {
         List<ChampionMasteryDto> championMasteryDtoListAux = getChampionsByMastery(nick);
         Map<String, Double> mapChampions = mapChampionsMostPlayed(lane);
