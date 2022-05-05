@@ -27,7 +27,7 @@ public class RiotgamesClient {
         String uri = String.format("/cdn/%s/data/pt_BR/champion.json", StaticWS.version);
 
         try {
-            result = restClient.sendReceive(null, uri, RequestApiEnum.DDRAGON, ResponseEntity.class);
+            result = restClient.sendReceive(null, uri, RequestApiEnum.DDRAGON);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
@@ -43,7 +43,7 @@ public class RiotgamesClient {
         String uri = String.format("/cdn/%s/data/pt_BR/champion/%s.json", StaticWS.version, championName);
 
         try {
-            result = restClient.sendReceive(null, uri, RequestApiEnum.DDRAGON, ResponseEntity.class);
+            result = restClient.sendReceive(null, uri, RequestApiEnum.DDRAGON);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
@@ -60,7 +60,7 @@ public class RiotgamesClient {
         String uri = "/lol/summoner/v4/summoners/by-name/" + nickName;
 
         try {
-            result = restClient.sendReceive(null, uri, RequestApiEnum.BR, ResponseEntity.class);
+            result = restClient.sendReceive(null, uri, RequestApiEnum.BR);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
@@ -76,7 +76,7 @@ public class RiotgamesClient {
         String uri = "/lol/champion-mastery/v4/champion-masteries/by-summoner/" + encryptedId;
 
         try {
-            result = restClient.sendReceive(null, uri, RequestApiEnum.BR, ResponseEntity.class);
+            result = restClient.sendReceive(null, uri, RequestApiEnum.BR);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
@@ -94,7 +94,7 @@ public class RiotgamesClient {
         String uri = String.format("/lol/match/v5/matches/by-puuid/%s/ids", puuId);
 
         try {
-            result = restClient.sendReceive(uriComponents, uri, RequestApiEnum.AMERICAS, ResponseEntity.class);
+            result = restClient.sendReceive(uriComponents, uri, RequestApiEnum.AMERICAS);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
@@ -110,7 +110,7 @@ public class RiotgamesClient {
         String uri = String.format("/lol/match/v5/matches/%s",matchId);
 
         try {
-            result = restClient.sendReceive(null, uri, RequestApiEnum.AMERICAS, ResponseEntity.class);
+            result = restClient.sendReceive(null, uri, RequestApiEnum.AMERICAS);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
@@ -127,7 +127,7 @@ public class RiotgamesClient {
         String uri = "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-champion-statistics/global/default/rcp-fe-lol-champion-statistics.js";
 
         try {
-            result = restClient.sendReceive(null, uri, null, ResponseEntity.class);
+            result = restClient.sendReceive(null, uri, null);
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {

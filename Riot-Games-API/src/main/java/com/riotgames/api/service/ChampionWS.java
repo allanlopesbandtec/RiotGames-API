@@ -165,7 +165,6 @@ public class ChampionWS {
     }
 
     /**
-     *
      * @param nick nick do invocador
      * @param lane lane do jogador
      * @return {@code List<ChampionMasteryDto>}

@@ -59,7 +59,7 @@ public class StaticWS {
         String[] arrayVersion;
 
         try {
-            result = restClient.sendReceive(null, "api/versions.json", RequestApiEnum.DDRAGON, ResponseEntity.class);
+            result = restClient.sendReceive(null, "api/versions.json", RequestApiEnum.DDRAGON);
             arrayVersion = objectMapper.readValue(result.getBody(), String[].class);
         } catch (ApiError ex) {
             throw ex;

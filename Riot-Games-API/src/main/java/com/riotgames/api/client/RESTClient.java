@@ -21,19 +21,17 @@ public class RESTClient {
     @Autowired
     private Gson gson;
 
-    //Método que vai enviar requisições para as APIs
 
     /**
-     *
-     * @param requestParams @null
-     * @param uri
-     * @param requestApiEnum @null
-     * @param retorno @null
+     * @param requestParams  {@link Map} com parâmetros de requisição - Aceita nullable
+     * @param uri            Método selecionado da API destino - Aceita nullable
+     * @param requestApiEnum Endereço de API destino
      * @return ResponseEntity
-     * @throws ApiError
+     * @throws ApiError classe de exceção RiotGamesClient
+     * @apiNote Método que vai enviar requisições para as APIs
      */
 
-    public ResponseEntity<String> sendReceive(Map<String, String> requestParams, String uri, RequestApiEnum requestApiEnum, Class retorno) throws ApiError {
+    public ResponseEntity<String> sendReceive(Map<String, String> requestParams, String uri, RequestApiEnum requestApiEnum) throws ApiError {
         //Resposta, request, endpoint
         ResponseEntity<String> responseEntity;
         HttpEntity<String> entity = new HttpEntity<>(getHeaders());
@@ -43,17 +41,8 @@ public class RESTClient {
             //Montando requisição baseada na API desejada
             //Uri passada com base no método
             //Headers para request
-
-            endpoint = UtilsWS.buildUri(
-                    requestParams,
-                    requestApiEnum != null ? requestApiEnum.getClientAmbiente() : "",
-                    uri);
-
-            responseEntity = restTemplate.exchange(
-                    endpoint,
-                    HttpMethod.GET,
-                    entity,
-                    String.class);
+            endpoint = UtilsWS.buildUri(requestParams, requestApiEnum != null ? requestApiEnum.getClientAmbiente() : "", uri);
+            responseEntity = restTemplate.exchange(endpoint, HttpMethod.GET, entity, String.class);
         } catch (RestClientException ex) {
             //Criação de um responseEntity para enviar o Erro
             ResponseEntity<Object> responseException;
@@ -68,14 +57,7 @@ public class RESTClient {
             }
 
             //Throws criado para obter o erro Http caso exista algum!
-            throw new ApiError(
-                    RESTClient.class,
-                    "sendReceive",
-                    "Error to send request to the RiotGames API",
-                    UtilsWS.returnErrors(responseException.getBody().toString(), requestApiEnum),
-                    responseException.getStatusCode(),
-                    endpoint
-            );
+            throw new ApiError(RESTClient.class, "sendReceive", "Error to send request to the RiotGames API", UtilsWS.returnErrors(responseException.getBody().toString(), requestApiEnum), responseException.getStatusCode(), endpoint);
         }
 
         return responseEntity;
@@ -86,18 +68,14 @@ public class RESTClient {
         HttpHeaders headers = new HttpHeaders();
 
         try {
-            headers.add("X-Riot-Token", "RGAPI-7d4ce410-e104-434d-b501-b8a164f2e5f2");
+            headers.add("X-Riot-Token", "RGAPI-c76a9b3a-8c3b-419e-bfb1-ce5144283c86");
             headers.add(HttpHeaders.ACCEPT, "application/json");
             headers.add("Content-Encoding", "gzip, deflate, br");
 //            headers.add("Content-Type", "application/json;charset=utf-8");
 //            headers.add("Accept-Language","en-US,en;q=0.9,pt-BR;q=0.8,pt;q=0.7");
 //            headers.add("Accept-Charset", "application/x-www-form-urlencoded; charset=UTF-8");
         } catch (Exception ex) {
-            throw new ApiError(
-                    RESTClient.class,
-                    "getHeaders",
-                    "Error to create new Headers",
-                    ex.getLocalizedMessage());
+            throw new ApiError(RESTClient.class, "getHeaders", "Error to create new Headers", ex.getLocalizedMessage());
         }
 
         return headers;

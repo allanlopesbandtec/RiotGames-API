@@ -8,9 +8,7 @@ import com.riotgames.api.model.enumerator.RequestApiEnum;
 import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.model.error.ErrorJsonApi;
 import com.riotgames.api.model.error.ErrorXmlApi;
-import org.apache.tomcat.jni.Directory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -68,6 +66,14 @@ public class UtilsWS {
         return errorXmlApi;
     }
 
+    /**
+     * @param requestMap {@link Map} com parâmetros de requisição
+     * @param url        API destino
+     * @param uri        Método selecionado
+     * @return {@link String}
+     * @throws ApiError Classe de exceção RiotGamesClient
+     * @apiNote Método para montar parâmetros de requisição de forma dinâmica
+     */
     public static String buildUri(Map<String, ?> requestMap, String url, String uri) throws ApiError {
         UriComponentsBuilder endpoint = UriComponentsBuilder.fromHttpUrl(url + uri);
 
