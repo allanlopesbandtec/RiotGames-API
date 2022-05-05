@@ -1,6 +1,5 @@
 package com.riotgames.api.client;
 
-import com.google.gson.Gson;
 import com.riotgames.api.model.enumerator.RequestApiEnum;
 import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.utils.UtilsWS;
@@ -12,18 +11,15 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class RESTClient {
     @Autowired
-    private RestTemplate restTemplate;
-
-    @Autowired
-    private Gson gson;
-
+    RestTemplate restTemplate;
 
     /**
-     * @param requestParams  {@link Map} com parâmetros de requisição - Aceita nullable
+     * @param requestParams  {@link Map} com parâmetros de requisição — Aceita nullable
      * @param uri            Método selecionado da API destino - Aceita nullable
      * @param requestApiEnum Endereço de API destino
      * @return ResponseEntity
@@ -52,12 +48,12 @@ public class RESTClient {
                 HttpStatusCodeException httpStatusError = (HttpStatusCodeException) ex;
                 responseException = new ResponseEntity<>(httpStatusError.getResponseBodyAsString(), httpStatusError.getStatusCode());
             } else {
-                //Erro dentro do método de validação Http ou erro "desconhecido", vai criar um erro com status genérico
+                //Erro no método de validação Http ou erro "desconhecido", vai criar um erro com status genérico
                 responseException = new ResponseEntity<>(ex.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
             //Throws criado para obter o erro Http caso exista algum!
-            throw new ApiError(RESTClient.class, "sendReceive", "Error to send request to the RiotGames API", UtilsWS.returnErrors(responseException.getBody().toString(), requestApiEnum), responseException.getStatusCode(), endpoint);
+            throw new ApiError(RESTClient.class, "sendReceive", "Error to send request to the RiotGames API", UtilsWS.returnErrors(Objects.requireNonNull(responseException.getBody()).toString(), requestApiEnum), responseException.getStatusCode(), endpoint);
         }
 
         return responseEntity;
@@ -71,9 +67,6 @@ public class RESTClient {
             headers.add("X-Riot-Token", "RGAPI-c76a9b3a-8c3b-419e-bfb1-ce5144283c86");
             headers.add(HttpHeaders.ACCEPT, "application/json");
             headers.add("Content-Encoding", "gzip, deflate, br");
-//            headers.add("Content-Type", "application/json;charset=utf-8");
-//            headers.add("Accept-Language","en-US,en;q=0.9,pt-BR;q=0.8,pt;q=0.7");
-//            headers.add("Accept-Charset", "application/x-www-form-urlencoded; charset=UTF-8");
         } catch (Exception ex) {
             throw new ApiError(RESTClient.class, "getHeaders", "Error to create new Headers", ex.getLocalizedMessage());
         }
