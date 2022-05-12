@@ -12,8 +12,8 @@ Funcionalidades:
 
 - Busca de perfil do jogador
 
-- Retorno do raking maestrias filtrado pelo invocador desejado
+- Retorno do raking maestrias filtrado pelo jogador desejado
 
-- Histórico de partidas filtrado pelo invocador desejado
+- Histórico de partidas filtrado pelo jogador desejado
 
 
