@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.*;
+import java.util.Formatter;
 import java.util.Map;
 
 @Component
@@ -89,7 +90,6 @@ public class UtilsWS {
             } catch (Exception ex) {
                 throw new ApiError(UtilsWS.class, "buildUri", "Error to create request params", ex.getLocalizedMessage());
             }
-
         }
         return endpoint.toUriString();
     }
@@ -97,42 +97,62 @@ public class UtilsWS {
     public static void saveRequest(String key, String title) throws ApiError {
 
         try {
-            File file = new File("src/main/resources/");
+            File file = new File("relatorio.txt");
+            FileWriter fileWriter = null;
 
+            if (!file.exists()) {
+                gravaRegistro(file.getAbsolutePath(), "");
+                fileWriter = new FileWriter(String.valueOf(file.toPath()), true);
+                saveRequest(key, title);
+            }
 
-            if (file.exists()) {
-                //Lê
-                FileReader fileReader = new FileReader(file);
-                BufferedReader bufferedReader = new BufferedReader(fileReader);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-                //Escreve
-                FileWriter fileWriter = new FileWriter(file);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            //Escreve
+            Formatter formatter = new Formatter(file);
+            fileWriter = new FileWriter(String.valueOf(file.getAbsoluteFile()), true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-                String linha;
-
-                while (bufferedReader.ready()) {
-                    linha = bufferedReader.readLine();
-
-                    if (linha.isEmpty() || linha.isBlank()) {
-                        bufferedWriter.write(String.format("Localizador: %s, Status de integração: %s", key, title));
-                    }
+            try {
+                if (bufferedReader.read() > 0) {
+                    bufferedWriter.write(String.format("Localizador: %s, Status de integração: %s", key, title));
+                } else {
+                    bufferedWriter.write(String.format("Localizador: %s, Status de integração: %s", key, title));
                 }
-
+            } catch (Exception ex) {
+                throw new ApiError(UtilsWS.class, "buildUri", "Error to create file", ex);
+            } finally {
                 //Necessário fechar
                 bufferedWriter.close();
+                formatter.close();
                 fileWriter.close();
                 bufferedReader.close();
                 fileReader.close();
-            } else {
-                file.mkdir();
-                file.createNewFile();
-                saveRequest(key, title);
             }
+
+        } catch (ApiError ex) {
+            throw ex;
         } catch (Exception ex) {
-            throw new ApiError(UtilsWS.class, "buildUri", "Error to create request params", ex.getLocalizedMessage());
+            throw new ApiError(UtilsWS.class, "buildUri", "Error to create file", ex);
+        }
+    }
+
+    public static void gravaRegistro(String nomeArq, String registro) {
+        BufferedWriter saida = null;
+        try {
+            saida = new BufferedWriter(new FileWriter(nomeArq, true));
+        } catch (IOException e) {
+            System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
         }
 
+        try {
+            saida.append(registro + "\n");
+            saida.close();
+
+        } catch (IOException e) {
+            System.err.printf("Erro ao gravar arquivo: %s.\n", e.getMessage());
+        }
     }
 
     @Autowired

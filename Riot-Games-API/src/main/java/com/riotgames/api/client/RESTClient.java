@@ -64,7 +64,7 @@ public class RESTClient {
         HttpHeaders headers = new HttpHeaders();
 
         try {
-            headers.add("X-Riot-Token", "RGAPI-c76a9b3a-8c3b-419e-bfb1-ce5144283c86");
+            headers.add("X-Riot-Token", "RGAPI-4e7622ed-c9b9-46e1-83f7-50c77661ba81");
             headers.add(HttpHeaders.ACCEPT, "application/json");
             headers.add("Content-Encoding", "gzip, deflate, br");
         } catch (Exception ex) {
