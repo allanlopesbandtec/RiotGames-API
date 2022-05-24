@@ -3,25 +3,26 @@ package com.riotgames.api.controller;
 import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.service.ChampionWS;
 import com.riotgames.api.service.StaticWS;
-import com.riotgames.api.utils.UtilsWS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = {
+        "http://localhost:4200"
+}, methods = {
+        RequestMethod.GET,
+})
 @RestController
 @RequestMapping("champions")
 public class ChampionController {
 
     @Autowired
-    private ChampionWS championWS;
-
-    @Autowired
-    private UtilsWS utilsWS;
+    ChampionWS championWS;
 
     @RequestMapping(value = "findVersion", method = RequestMethod.GET)
-    public ResponseEntity<Object> loadFindVersion() throws ApiError {
-        ResponseEntity<Object> response = null;
+    public ResponseEntity<Object> loadFindVersion() {
+        ResponseEntity<Object> response;
 
         try {
             StaticWS.findPatch();
@@ -40,7 +41,7 @@ public class ChampionController {
 
     @GetMapping("/load-championsList")
     public ResponseEntity<Object> loadAllChampions() {
-        ResponseEntity<Object> response = null;
+        ResponseEntity<Object> response;
 
         try {
             StaticWS.findChampionsList();
@@ -93,7 +94,7 @@ public class ChampionController {
 
     @GetMapping("/champions/{nick}")
     public ResponseEntity<Object> allChampionsByMastery(@PathVariable String nick) {
-        ResponseEntity<Object> response = null;
+        ResponseEntity<Object> response;
 
         try {
             response = new ResponseEntity<>(championWS.getChampionsByMastery(nick), HttpStatus.OK);
@@ -107,7 +108,7 @@ public class ChampionController {
     @GetMapping("/by-lane/{nick}")
     public ResponseEntity<Object> allChampionsByMastery(@PathVariable String nick,
                                                         @RequestParam(name = "lane") String lane) {
-        ResponseEntity<Object> response = null;
+        ResponseEntity<Object> response;
 
         try {
             response = new ResponseEntity<>(championWS.getFilterSearchChampions(nick, lane), HttpStatus.OK);

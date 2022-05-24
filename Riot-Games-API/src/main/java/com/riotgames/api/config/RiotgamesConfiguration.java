@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 public class RiotgamesConfiguration {
 
     @Autowired
-    private ChampionController championController;
+    ChampionController championController;
 
     @Bean
     public RestTemplate restTemplate() {
@@ -24,12 +24,12 @@ public class RiotgamesConfiguration {
     }
 
     @Bean
-    public ResponseEntity<Object> loadFindVersion() throws ApiError {
+    public ResponseEntity<Object> loadFindVersion() {
         return championController.loadFindVersion();
     }
 
     @Bean
-    public ResponseEntity<Object> loadChampionsList() throws ApiError {
+    public ResponseEntity<Object> loadChampionsList() {
         return championController.loadAllChampions();
     }
 

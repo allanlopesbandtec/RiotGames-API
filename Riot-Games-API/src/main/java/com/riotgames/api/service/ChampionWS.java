@@ -22,13 +22,13 @@ import java.util.stream.Collectors;
 public class ChampionWS {
 
     @Autowired
-    private RiotgamesClient riotgamesClient;
+    RiotgamesClient riotgamesClient;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    ObjectMapper objectMapper;
 
     @Autowired
-    private SummonerWS summonerWS;
+    SummonerWS summonerWS;
 
     /**
      * @return {@code Map<String, Champion>}
@@ -36,8 +36,8 @@ public class ChampionWS {
      * @apiNote Requisição com campeões da página web <a href="http://ddragon.leagueoflegends.com/cdn/12.5.1/data/pt_BR/champion.json">http://ddragon.leagueoflegends.com/cdn/12.5.1/data/pt_BR/champion.json</a>
      */
     protected Map<String, Champion> mapChampions() throws ApiError {
-        Map<String, Champion> mapChampions = new HashMap<>();
-        String request = "";
+        Map<String, Champion> mapChampions;
+        String request;
 
         try {
             request = riotgamesClient.findChampions();
@@ -62,7 +62,7 @@ public class ChampionWS {
      * @apiNote Busca o campeão mais detalhado
      */
     public ChampionDetail getChampDetail(String championName) throws ApiError {
-        ChampionDetail championDetail = null;
+        ChampionDetail championDetail;
         String request;
 
         if (championName == null || championName.isBlank() || championName.isEmpty()) {
@@ -126,7 +126,7 @@ public class ChampionWS {
         return getChampionMasteryDto(championsByMasteries, championDto);
     }
 
-    public List<ChampionDto> getCampeaoDtos() throws ApiError {
+    public List<ChampionDto> getCampeaoDtos() {
         return StaticWS.championsList.stream().map(ChampionDto::new).collect(Collectors.toList());
     }
 

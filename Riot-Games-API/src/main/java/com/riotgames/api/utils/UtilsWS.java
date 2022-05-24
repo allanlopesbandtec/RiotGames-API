@@ -8,20 +8,21 @@ import com.riotgames.api.model.enumerator.RequestApiEnum;
 import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.model.error.ErrorJsonApi;
 import com.riotgames.api.model.error.ErrorXmlApi;
+import com.riotgames.api.model.match.objectives.Champion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.*;
-import java.util.Formatter;
-import java.util.Map;
+import java.nio.file.Files;
+import java.util.*;
 
 @Component
 public class UtilsWS {
 
-    private static Gson gson;
+    static Gson gson;
 
-    private static ObjectMapper objectMapper;
+    static ObjectMapper objectMapper;
 
     public static Object returnErrors(String error, RequestApiEnum requestApiEnum) throws ApiError {
         Object result;
@@ -98,11 +99,11 @@ public class UtilsWS {
 
         try {
             File file = new File("relatorio.txt");
-            FileWriter fileWriter = null;
+            FileWriter fileWriter;
 
             if (!file.exists()) {
                 gravaRegistro(file.getAbsolutePath(), "");
-                fileWriter = new FileWriter(String.valueOf(file.toPath()), true);
+                fileWriter = new FileWriter(String.valueOf(file.getAbsoluteFile()), true);
                 saveRequest(key, title);
             }
 
@@ -130,7 +131,6 @@ public class UtilsWS {
                 bufferedReader.close();
                 fileReader.close();
             }
-
         } catch (ApiError ex) {
             throw ex;
         } catch (Exception ex) {
@@ -142,16 +142,19 @@ public class UtilsWS {
         BufferedWriter saida = null;
         try {
             saida = new BufferedWriter(new FileWriter(nomeArq, true));
-        } catch (IOException e) {
+        } catch (IOException ex) {
             System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
+        } catch (Exception ex) {
+
         }
 
         try {
             saida.append(registro + "\n");
             saida.close();
-
         } catch (IOException e) {
             System.err.printf("Erro ao gravar arquivo: %s.\n", e.getMessage());
+        } catch (Exception ex) {
+
         }
     }
 
@@ -165,5 +168,91 @@ public class UtilsWS {
         UtilsWS.objectMapper = objectMapper;
     }
 
+    public Integer gravarRegistroLocacaoTxt(String nomeArquivo, String key, String title) {
 
+        int contRegDados = 0;
+
+        FileWriter arq = null;
+        Formatter saida = null;
+        boolean deuRuim = false;
+
+        try {
+            arq = new FileWriter(nomeArquivo, true);
+            saida = new Formatter(arq);
+        } catch (IOException erro) {
+            System.err.println("Erro ao abrir o arquivo");
+            System.exit(1);
+        }
+
+        try {
+            saida.format("Localizador: %40s, Status de integração: %40s\n", key, title);
+            contRegDados++;
+        } catch (FormatterClosedException erro) {
+            System.err.println("Erro ao gravar o arquivo");
+            deuRuim = true;
+        } finally {
+            saida.close();
+            try {
+                arq.close();
+            } catch (IOException erro) {
+                System.err.println("Erro ao fechar o arquivo.");
+                deuRuim = true;
+            }
+            if (deuRuim) {
+                System.exit(1);
+            }
+        }
+
+        return contRegDados;
+    }
+
+    public String leExibeArquivo(String nomeArquivo) {
+
+        FileReader arq = null;        // objeto FileReader - representa o arquivo a ser lido
+        Scanner entrada = null;        // objeto Scanner - para ler do arquivo
+
+        List<String> linhas = new ArrayList<>();
+
+
+        // Abre o arquivo para leitura
+        try {
+            arq = new FileReader(nomeArquivo);
+            entrada = new Scanner(arq);
+            linhas = Files.readAllLines(new File(nomeArquivo).toPath());
+
+            String header = entrada.next();
+            String registroLinha = "";
+
+            int contador = 0;
+
+            while ((registroLinha = entrada.nextLine()) != null) {
+
+                if (contador == 0) {
+
+                } else if (linhas.size() - 1 == contador) {
+                    break;
+                } else {
+                    String loc = registroLinha.substring(2, 5).trim();
+                }
+                contador++;
+            }
+        } catch (FileNotFoundException erro) {
+            System.err.println("Arquivo não encontrado");
+            System.exit(1);
+        } catch (IOException e) {
+            System.out.println(e);
+        } catch (NoSuchElementException erro) {
+            System.err.println("Arquivo com problema.");
+        } catch (IllegalStateException erro) {
+            System.err.println("Erro na leitura do arquivo.");
+        } finally {
+            entrada.close();
+            try {
+                arq.close();
+            } catch (IOException erro) {
+                System.err.println("Erro ao fechar arquivo.");
+            }
+        }
+        return linhas;
+    }
 }
