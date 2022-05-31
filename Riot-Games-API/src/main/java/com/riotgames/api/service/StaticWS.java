@@ -31,7 +31,7 @@ public class StaticWS {
     public static void findChampionsList() throws ApiError {
         //Método que vai retirar do map e jogar dentro de um List
         //Por quê ? Porque é mais fácil de trabalhar com List
-        List<Champion> allChampionsList = new ArrayList<>();
+        List<Champion> allChampionsList;
 
         try {
             //Obtendo valor dos campeões

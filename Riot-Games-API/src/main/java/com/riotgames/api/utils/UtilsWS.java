@@ -8,13 +8,11 @@ import com.riotgames.api.model.enumerator.RequestApiEnum;
 import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.model.error.ErrorJsonApi;
 import com.riotgames.api.model.error.ErrorXmlApi;
-import com.riotgames.api.model.match.objectives.Champion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.*;
 
 @Component
@@ -102,7 +100,6 @@ public class UtilsWS {
             FileWriter fileWriter;
 
             if (!file.exists()) {
-                gravaRegistro(file.getAbsolutePath(), "");
                 fileWriter = new FileWriter(String.valueOf(file.getAbsoluteFile()), true);
                 saveRequest(key, title);
             }
@@ -138,25 +135,6 @@ public class UtilsWS {
         }
     }
 
-    public static void gravaRegistro(String nomeArq, String registro) {
-        BufferedWriter saida = null;
-        try {
-            saida = new BufferedWriter(new FileWriter(nomeArq, true));
-        } catch (IOException ex) {
-            System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
-        } catch (Exception ex) {
-
-        }
-
-        try {
-            saida.append(registro + "\n");
-            saida.close();
-        } catch (IOException e) {
-            System.err.printf("Erro ao gravar arquivo: %s.\n", e.getMessage());
-        } catch (Exception ex) {
-
-        }
-    }
 
     @Autowired
     public void setGson(Gson gson) {
@@ -204,55 +182,5 @@ public class UtilsWS {
         }
 
         return contRegDados;
-    }
-
-    public String leExibeArquivo(String nomeArquivo) {
-
-        FileReader arq = null;        // objeto FileReader - representa o arquivo a ser lido
-        Scanner entrada = null;        // objeto Scanner - para ler do arquivo
-
-        List<String> linhas = new ArrayList<>();
-
-
-        // Abre o arquivo para leitura
-        try {
-            arq = new FileReader(nomeArquivo);
-            entrada = new Scanner(arq);
-            linhas = Files.readAllLines(new File(nomeArquivo).toPath());
-
-            String header = entrada.next();
-            String registroLinha = "";
-
-            int contador = 0;
-
-            while ((registroLinha = entrada.nextLine()) != null) {
-
-                if (contador == 0) {
-
-                } else if (linhas.size() - 1 == contador) {
-                    break;
-                } else {
-                    String loc = registroLinha.substring(2, 5).trim();
-                }
-                contador++;
-            }
-        } catch (FileNotFoundException erro) {
-            System.err.println("Arquivo não encontrado");
-            System.exit(1);
-        } catch (IOException e) {
-            System.out.println(e);
-        } catch (NoSuchElementException erro) {
-            System.err.println("Arquivo com problema.");
-        } catch (IllegalStateException erro) {
-            System.err.println("Erro na leitura do arquivo.");
-        } finally {
-            entrada.close();
-            try {
-                arq.close();
-            } catch (IOException erro) {
-                System.err.println("Erro ao fechar arquivo.");
-            }
-        }
-        return linhas;
     }
 }

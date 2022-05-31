@@ -1,7 +1,6 @@
 package com.riotgames.api.config;
 
 import com.riotgames.api.controller.ChampionController;
-import com.riotgames.api.model.error.ApiError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -2,8 +2,10 @@ package com.riotgames.api.controller;
 
 import com.riotgames.api.model.error.ApiError;
 import com.riotgames.api.service.SummonerWS;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
         RequestMethod.GET,
 })
 @RestController
-@RequestMapping(path = "/summoners")
+@RequestMapping(path = "/summoners", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SummonerController {
 
     @Autowired

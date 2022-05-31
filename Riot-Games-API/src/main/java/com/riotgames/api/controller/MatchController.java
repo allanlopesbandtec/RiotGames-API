@@ -5,6 +5,7 @@ import com.riotgames.api.model.match.MatchRequest;
 import com.riotgames.api.service.MatchWS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
         RequestMethod.GET,
 })
 @RestController
-@RequestMapping(path = "/matchs")
+@RequestMapping(path = "/matchs", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MatchController {
 
     @Autowired

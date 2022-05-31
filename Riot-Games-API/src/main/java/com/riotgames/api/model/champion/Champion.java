@@ -11,9 +11,9 @@ import java.util.Map;
 
 public class Champion {
 
-    @JsonIgnore
     //Map que vai servir para construir cada instancia de campeão
     //E mapear com sua própria chave
+    @JsonIgnore
     public Map<String, Champion> championMap = new HashMap<>();
     //A notação JsonProperty faz exatemente o que diz!
     //Ela quem vai mapear cada chave no Json para o atributo com mesmo nome!
@@ -61,12 +61,6 @@ public class Champion {
         //método put "cadastra" um objeto com sua chave
         championMap.put(key, champion);
     }
-
-    //Setter - não usei
-//    public Champion setChampion(Map<String, Champion> championMap) {
-//        this.championMap = championMap;
-//        return this;
-//    }
 
     //Getter do Map
     public Map<String, Champion> getchampionMap() {
